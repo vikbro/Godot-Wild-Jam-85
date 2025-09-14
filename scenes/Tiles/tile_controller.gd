@@ -5,7 +5,7 @@ signal highlight_cell(cell_coords: Vector2i)
 
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
-@export var flip_duration := 0.6
+@export var flip_duration := 5
 @onready var highlight_tile_layer: TileMapLayer = $HighlightTileLayer
 
 # Called when the node enters the scene tree for the first time.
@@ -41,7 +41,8 @@ func place_tile(placement_position) -> void:
 func animate_placement(tile_texture: Vector2i, tile_pos: Vector2) -> void:
 	var overlay = Sprite2D.new()
 	overlay.texture = get_cell_texture(tile_texture)
-	overlay.position = tile_pos
+	#tile_map_layer.get_cell_tile_data(tile_pos).texture_origin
+	overlay.position = tile_pos - Vector2(tile_map_layer.get_cell_tile_data(tile_texture).texture_origin)
 	overlay.centered = true  # Ensure sprite is centered on position
 	add_child(overlay)
 
