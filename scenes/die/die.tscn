@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dds2vhn3wrsc3"]
+
+[ext_resource type="Script" uid="uid://d15jc4c0x0x7x" path="res://scripts/die/die.gd" id="1_4rx5q"]
+[ext_resource type="PackedScene" uid="uid://bi13jin2ioocn" path="res://scenes/die/die_ray_cast.tscn" id="2_vq5di"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lbo6s"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_4rx5q")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D"]
+shape = SubResource("BoxShape3D_lbo6s")
+debug_color = Color(0.686275, 0, 0, 1)
+
+[node name="RayCasts" type="Node3D" parent="."]
+
+[node name="DieRayCast1" parent="RayCasts" instance=ExtResource("2_vq5di")]
+opposite_side = 6
+
+[node name="DieRayCast2" parent="RayCasts" instance=ExtResource("2_vq5di")]
+opposite_side = 6

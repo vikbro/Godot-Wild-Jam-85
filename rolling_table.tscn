@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://dswslhi4hvr4y"]
+
+[ext_resource type="PackedScene" uid="uid://cyp1yh740uda6" path="res://rigid_body_3d_die.tscn" id="1_ef56s"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cdh0g"]
+bounce = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cdh0g"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cdh0g"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdh0g"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ef56s"]
+bounce = 1.0
+
+[sub_resource type="Environment" id="Environment_ef56s"]
+ambient_light_color = Color(0.705882, 0, 0, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Table" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_cdh0g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -5, 0)
+shape = SubResource("BoxShape3D_cdh0g")
+debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+mesh = SubResource("BoxMesh_cdh0g")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdh0g")
+
+[node name="Wall" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ef56s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
+transform = Transform3D(100, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, -50)
+shape = SubResource("BoxShape3D_cdh0g")
+debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="Wall2" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ef56s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
+transform = Transform3D(100, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 50)
+shape = SubResource("BoxShape3D_cdh0g")
+debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="Wall3" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ef56s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3"]
+transform = Transform3D(-4.37114e-06, 0, 1, 0, 10, 0, -100, 0, -4.37114e-08, 50, 0, 0)
+shape = SubResource("BoxShape3D_cdh0g")
+debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="Wall4" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ef56s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall4"]
+transform = Transform3D(-4.37114e-06, 0, 1, 0, 10, 0, -100, 0, -4.37114e-08, -50, 0, 0)
+shape = SubResource("BoxShape3D_cdh0g")
+debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.64679, -0.692333, 0.319903, 0, 0.419452, 0.907777, -0.762668, -0.587141, 0.271297, 29.7483, 49.5642, 20.2037)
+fov = 50.625
+near = 6.797
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 100, 0)
+visible = false
+spot_range = 465.467
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ef56s")
+
+[node name="RigidBody3D" parent="." instance=ExtResource("1_ef56s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.654358, -0.587026, 0.476672, -0.536074, 0.804705, 0.255099, 0.53333, 0.0886051, 0.841254, 57.6074, 88.7174, -68.8334)
+light_energy = 1.161
+light_indirect_energy = 3.101
+light_angular_distance = 65.45
