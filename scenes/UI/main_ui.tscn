@@ -11,15 +11,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7dr7o")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+offset_right = 200.0
+offset_bottom = 100.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 72.0
+offset_right = 200.0
+offset_bottom = 100.0
 grow_horizontal = 2
 
-[node name="TileAmount" type="Label" parent="HBoxContainer"]
+[node name="TileAmount" type="Label" parent="Panel/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 52
-text = "!234"
+text = "10"
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer"]
+layout_mode = 2
