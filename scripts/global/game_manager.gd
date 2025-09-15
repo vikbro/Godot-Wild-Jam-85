@@ -1,6 +1,6 @@
 extends Node
 
-var avaliable_tiles: int = 10
+var avaliable_tiles: int = 50
 
 
 
