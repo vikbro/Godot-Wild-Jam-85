@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://cn3eu0pdpr15s" path="res://assets/tileset/topTiles.png" id="2_gkvgq"]
 [ext_resource type="Script" uid="uid://daq82wjgw2cmp" path="res://scenes/Tiles/cell_highlights.gd" id="4_qxco7"]
 [ext_resource type="Script" uid="uid://cdemajdy7vfpm" path="res://scenes/Tiles/melt_logic.gd" id="5_j1ga8"]
-[ext_resource type="Script" uid="uid://c21p8k8nl3ld4" path="res://scenes/Tiles/audio.gd" id="5_qxco7"]
+[ext_resource type="Script" path="res://scenes/Tiles/audio.gd" id="5_qxco7"]
 [ext_resource type="AudioStream" uid="uid://ckleiqtwx8qf2" path="res://Sound/Wind/strong-wind-1.mp3" id="6_ifirn"]
-[ext_resource type="Script" uid="uid://sl8nuvgifgoi" path="res://scenes/Tiles/canvas_layer.gd" id="7_53my0"]
+[ext_resource type="Script" path="res://scenes/Tiles/canvas_layer.gd" id="7_53my0"]
 [ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="7_ifirn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m54yv"]
