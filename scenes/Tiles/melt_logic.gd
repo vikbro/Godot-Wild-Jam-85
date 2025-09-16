@@ -6,7 +6,7 @@ signal tile_melted(cell_coords, previous_tile_data)
 signal snow_tile_added(cell_coords)
 
 # Configuration
-@export var base_melt_time: float = 1.0       # Base time to melt (seconds)
+@export var base_melt_time: float = 10       # Base time to melt (seconds)
 @export var neighbor_melt_penalty: float = 2.0 # Extra time per snow neighbor
 @export var check_interval: float = 0.5       # How often to check melting (seconds)
 

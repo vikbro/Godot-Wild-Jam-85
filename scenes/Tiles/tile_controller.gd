@@ -3,7 +3,7 @@ class_name TileController
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var highlight_layer: HighlightTile = $HighlightTile  # Assuming you have this
-@export var flip_duration := 5  # Changed to more reasonable duration
+@export var flip_duration := .5  # Changed to more reasonable duration
 @onready var melt_logic: MeltLogic = $MeltLogic
 
 
@@ -11,10 +11,10 @@ var is_dragging := false
 var processed_cells: Array[Vector2i] = []  # Track cells already processed during current drag
 
 func _process(delta: float) -> void:
-#	This is for debug purpose
-	#var mouse_pos = get_global_mouse_position()
-	#var cell_cords = tile_map_layer.local_to_map(mouse_pos)
-	#Events.on_tile_hover.emit(get_cell_texture(cell_cords))
+	#This is for debug purpose
+	var mouse_pos = get_global_mouse_position()
+	var cell_cords = tile_map_layer.local_to_map(mouse_pos)
+	Events.on_tile_hover.emit(get_cell_texture(cell_cords))
 	pass
 
 func _ready() -> void:
@@ -43,6 +43,7 @@ func _input(event: InputEvent) -> void:
 				var mouse_pos = get_global_mouse_position()
 				if can_tile_be_changed(tile_map_layer.local_to_map(mouse_pos)):
 					place_tile(mouse_pos)
+					Events.on_tile_placement.emit()
 					return
 			else:
 				# Stop dragging
@@ -61,6 +62,7 @@ func place_tile(placement_position: Vector2,replacement_tile_texture : Vector2i 
 	# Skip if we already processed this cell during current drag
 	if processed_cells.has(cell_coords):
 		return
+	Events.on_tile_placement.emit()		
 	
 	# Check if tile can be changed (custom data checks)
 	#TODO validation should not be in placement SOLID
@@ -80,17 +82,19 @@ func place_tile(placement_position: Vector2,replacement_tile_texture : Vector2i 
 	var atlas_coords = tile_map_layer.get_cell_atlas_coords(cell_coords)
 	var global_pos = tile_map_layer.map_to_local(cell_coords)
 	
-	Events.on_tile_placement.emit()
-	# Erase current tile
-	tile_map_layer.erase_cell(cell_coords)
+
 	
 	# Animate the placement FROM image, TO image
 	animate_placement(cell_coords,replacement_tile_texture, global_pos)
+	melt_logic.add_snow_tile(cell_coords)
+	processed_cells.erase(cell_coords)
 	
+	
+	# Erase current tile
+	tile_map_layer.erase_cell(cell_coords)
 	# Update tilemap with new tile after animation starts
 	await get_tree().create_timer(flip_duration * 0.5).timeout  # Wait for animation to be halfway
 	tile_map_layer.set_cell(cell_coords, 1, replacement_tile_texture)
-	melt_logic.add_snow_tile(cell_coords)
 
 func can_tile_be_changed(cell_coords: Vector2i) -> bool:
 	var tile_data = tile_map_layer.get_cell_tile_data(cell_coords)
@@ -148,7 +152,7 @@ func get_cell_texture(coord: Vector2i) -> Texture:
 	if source_id == -1:
 		return null
 	
-	var source = tile_map_layer.tile_set.get_source(source_id)
+	var source = tile_map_layer.tile_set.get_source(1)
 	if not source or not source is TileSetAtlasSource:
 		return null
 	
