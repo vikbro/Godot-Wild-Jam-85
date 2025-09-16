@@ -230,7 +230,6 @@ metadata/_edit_lock_ = true
 
 [node name="MeltLogic" type="Node2D" parent="."]
 script = ExtResource("5_j1ga8")
-neighbor_melt_penalty = 0.0
 
 [node name="VisualEffects" type="Node2D" parent="."]
 

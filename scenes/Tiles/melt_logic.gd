@@ -1,159 +1,167 @@
 extends Node
 class_name MeltLogic
 
-# Signals
-signal tile_melted(cell_coords, previous_tile_data)
-signal snow_tile_added(cell_coords)
+# Signals to communicate with TileController
+signal tile_melted(cell_coords: Vector2i, previous_data: SnowTileData)
+signal snow_tile_added(cell_coords: Vector2i)
+signal melting_rate_updated(cell_coords: Vector2i, melt_rate: float)
 
-# Configuration
-@export var base_melt_time: float = 10       # Base time to melt (seconds)
-@export var neighbor_melt_penalty: float = 2.0 # Extra time per snow neighbor
-@export var check_interval: float = 0.5       # How often to check melting (seconds)
-
-# Data storage
-var snow_tiles: Dictionary = {}  # cell_coords -> SnowTileData
-var melt_timers: Dictionary = {} # cell_coords -> SceneTreeTimer
-
-# Tile data structure
+# Data structure to store information about snow tiles
 class SnowTileData:
 	var cell_coords: Vector2i
-	var previous_source_id: int
+	var melt_timer: float
+	var base_melt_time: float
+	var melt_rate: float
 	var previous_atlas_coords: Vector2i
-	var previous_alternative_id: int
-	var creation_time: float
-	var neighbors: Array[Vector2i] = []
+	var is_melting: bool
+	var neighbor_count: int
 	
-	func _init(coords: Vector2i, source_id: int, atlas_coords: Vector2i, alt_id: int):
+	func _init(coords: Vector2i, melt_time: float, prev_atlas: Vector2i):
 		cell_coords = coords
-		previous_source_id = source_id
-		previous_atlas_coords = atlas_coords
-		previous_alternative_id = alt_id
-		creation_time = Time.get_unix_time_from_system()
+		base_melt_time = melt_time
+		melt_timer = melt_time
+		melt_rate = 1.0
+		previous_atlas_coords = prev_atlas
+		is_melting = true
+		neighbor_count = 0
 
-# Reference to TileMapLayer
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 
-# Persistent timer for periodic checking
-var check_timer: Timer
+var snow_tiles: Dictionary = {}  # Key: Vector2i cell coordinates, Value: SnowTileData
 
-func _ready() -> void:
-	check_timer = Timer.new()
-	check_timer.wait_time = check_interval
-	check_timer.one_shot = false
-	check_timer.autostart = true
-	add_child(check_timer)
-	check_timer.timeout.connect(_check_melting)
+@export var base_melt_time: float = 4.0
+@export var neighbor_slow_factor: float = 0.7
+@export var check_interval: float = 0.1
 
-func _check_melting() -> void:
-	var current_time = Time.get_unix_time_from_system()
+# Hexagonal neighbor directions
+var hex_directions = [
+	Vector2i(1, 0), Vector2i(1, -1), Vector2i(0, -1),
+	Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)
+]
+
+func _ready():
 	
+	start_melting()
+
+func start_melting():
+	var timer = Timer.new()
+	timer.wait_time = check_interval
+	timer.timeout.connect(_process_melting)
+	add_child(timer)
+	timer.start()
+
+func add_snow_tile(cell_coords: Vector2i):
+	# Get the previous tile's atlas coordinates
+	var prev_atlas_coords = tile_map_layer.get_cell_atlas_coords(cell_coords)
+	
+	# Create new snow tile data
+	var snow_data = SnowTileData.new(cell_coords, base_melt_time, prev_atlas_coords)
+	
+	snow_tiles[cell_coords] = snow_data
+	
+	# Count initial neighbors and update rate
+	snow_data.neighbor_count = count_snow_neighbors(cell_coords)
+	update_melting_rate(cell_coords)
+	
+	update_neighbors_melting_rates(cell_coords)
+	
+	snow_tile_added.emit(cell_coords)
+
+func _process_melting():
+	# Process each snow tile
 	for cell_coords in snow_tiles.keys():
-
-		var snow_data: SnowTileData = snow_tiles[cell_coords]
-
-		# Surrounded by snow → can't melt
-		if _is_surrounded_by_snow(cell_coords):
-			melt_timers.erase(cell_coords) # let any old timer expire naturally
-			continue
+		var snow_data = snow_tiles[cell_coords]
 		
-		# Calculate melt time
-		var melt_time = base_melt_time + (_count_snow_neighbors(cell_coords) * neighbor_melt_penalty)
-		var elapsed_time = current_time - snow_data.creation_time
-		var remaining_time = max(0.1, melt_time - elapsed_time)
-		print(cell_coords, remaining_time)
-		# Schedule melt if not already scheduled
-		if not melt_timers.has(cell_coords):
-			var melt_timer: SceneTreeTimer = get_tree().create_timer(remaining_time)
-			melt_timer.timeout.connect(_melt_tile.bind(cell_coords))
-			melt_timers[cell_coords] = melt_timer
+		if snow_data.is_melting:
+			# Decrement the melt timer
+			snow_data.melt_timer -= check_interval * snow_data.melt_rate
+			#debug_tile_states()
+			# Check if the tile should melt
+			if snow_data.melt_timer <= 0:
+				melt_tile(cell_coords)
 
-func _melt_tile(cell_coords: Vector2i) -> void:
+func melt_tile(cell_coords: Vector2i):
 	if not snow_tiles.has(cell_coords):
 		return
 	
-	var snow_data: SnowTileData = snow_tiles[cell_coords]
+	var snow_data = snow_tiles[cell_coords]
 	
-	# Restore previous tile
-	tile_map_layer.set_cell(
-		cell_coords,
-		snow_data.previous_source_id,
-		snow_data.previous_atlas_coords,
-		snow_data.previous_alternative_id
-	)
-	
-	# Clean up
-	snow_tiles.erase(cell_coords)
-	melt_timers.erase(cell_coords) # SceneTreeTimer auto-frees
-	
-	# Emit signal
 	tile_melted.emit(cell_coords, snow_data)
 	
-	# Update neighbors
-	_update_neighbor_tiles(cell_coords)
+	snow_tiles.erase(cell_coords)
+	
+	# Update all neighbors of the melted tile
+	update_neighbors_melting_rates(cell_coords)
 
-func add_snow_tile(cell_coords: Vector2i) -> void:
-	# Save previous tile
-	var source_id = tile_map_layer.get_cell_source_id(cell_coords)
-	var atlas_coords = tile_map_layer.get_cell_atlas_coords(cell_coords)
-	var alternative_id = tile_map_layer.get_cell_alternative_tile(cell_coords)
-	
-	var snow_data = SnowTileData.new(cell_coords, source_id, atlas_coords, alternative_id)
-	snow_tiles[cell_coords] = snow_data
-	
-	# Place snow (example: source_id 1, atlas_coords (1,3))
-	tile_map_layer.set_cell(cell_coords, 1, Vector2i(1, 3), 0)
-	
-	# Emit signal
-	snow_tile_added.emit(cell_coords)
-	
-	# Update neighbors
-	_update_neighbor_tiles(cell_coords)
-
-func _update_neighbor_tiles(center_coords: Vector2i) -> void:
-	if snow_tiles.has(center_coords):
-		var snow_data: SnowTileData = snow_tiles[center_coords]
-		snow_data.neighbors = tile_map_layer.get_surrounding_cells(center_coords)
-	
-	for neighbor_coords in tile_map_layer.get_surrounding_cells(center_coords):
+func update_neighbors_melting_rates(melted_cell_coords: Vector2i):
+	# Update melting rates for all neighbors of the melted tile
+	for direction in hex_directions:
+		var neighbor_coords = melted_cell_coords + direction
 		if snow_tiles.has(neighbor_coords):
-			var neighbor_data: SnowTileData = snow_tiles[neighbor_coords]
-			neighbor_data.neighbors = tile_map_layer.get_surrounding_cells(neighbor_coords)
-			
-			# Remove old melt timer → will be rescheduled on next _check_melting
-			melt_timers.erase(neighbor_coords)
+			update_melting_rate(neighbor_coords)
+	
+	# Also check if any tiles that were previously stopped should now start melting
+	check_stopped_tiles_around(melted_cell_coords)
 
-func _count_snow_neighbors(cell_coords: Vector2i) -> int:
-	var count := 0
-	var tile_data = tile_map_layer.get_cell_tile_data(cell_coords)
-	if not tile_data:
-		return false
+func check_stopped_tiles_around(center_coords: Vector2i):
+	# Check a larger area (2 tiles radius) for tiles that might need updating
+	var check_radius = 2
+	for dx in range(-check_radius, check_radius + 1):
+		for dy in range(-check_radius, check_radius + 1):
+			var check_coords = center_coords + Vector2i(dx, dy)
+			if snow_tiles.has(check_coords):
+				var snow_data = snow_tiles[check_coords]
+				if not snow_data.is_melting:
+					# Re-evaluate if this stopped tile should start melting again
+					update_melting_rate(check_coords)
+
+func update_melting_rate(cell_coords: Vector2i):
+	if not snow_tiles.has(cell_coords):
+		return
 	
-	# Check custom data layers
-	var can_change = tile_data.get_custom_data("can_change")
-	var is_winter = tile_data.get_custom_data("is_winter")
+	var snow_data = snow_tiles[cell_coords]
+	var old_melting_state = snow_data.is_melting
+	var old_melt_rate = snow_data.melt_rate
 	
-	for neighbor_coords: Vector2i in tile_map_layer.get_surrounding_cells(cell_coords):
-		if snow_tiles.has(neighbor_coords) or tile_map_layer.get_cell_source_id(neighbor_coords) == 1:
+	# Count current neighbors
+	snow_data.neighbor_count = count_snow_neighbors(cell_coords)
+	
+	# Determine melting behavior based on neighbor count
+	if snow_data.neighbor_count >= 5:  # Well-insulated (5-6 neighbors)
+		snow_data.is_melting = false
+		snow_data.melt_rate = 0.0
+	elif snow_data.neighbor_count > 0:  # Some insulation (1-4 neighbors)
+		snow_data.is_melting = true
+		# More gradual scaling - each neighbor provides some insulation
+		var insulation_factor = snow_data.neighbor_count * neighbor_slow_factor / 6.0
+		snow_data.melt_rate = 1.0 - insulation_factor
+	else:  # No insulation (0 neighbors)
+		snow_data.is_melting = true
+		snow_data.melt_rate = 1.0
+	
+	# If state changed significantly, emit signal
+	if old_melting_state != snow_data.is_melting or abs(old_melt_rate - snow_data.melt_rate) > 0.1:
+		melting_rate_updated.emit(cell_coords, snow_data.melt_rate)
+
+func count_snow_neighbors(cell_coords: Vector2i) -> int:
+	var count = 0
+	
+	for direction in hex_directions:
+		var neighbor_coords = cell_coords + direction
+		if snow_tiles.has(neighbor_coords):
 			count += 1
+	
 	return count
 
-func _is_surrounded_by_snow(cell_coords: Vector2i) -> bool:
-	for neighbor_coords in tile_map_layer.get_surrounding_cells(cell_coords):
-		#if not snow_tiles.has(neighbor_coords) and tile_map_layer.get_cell_source_id(neighbor_coords) != 1:
-		if not snow_tiles.has(neighbor_coords):
-			return false
-	return true
+#DEBUG function
+func force_update_all_melting_rates():
+	for cell_coords in snow_tiles.keys():
+		update_melting_rate(cell_coords)
 
-# Debug / utility
-func force_melt_tile(cell_coords: Vector2i) -> void:
-	if snow_tiles.has(cell_coords):
-		_melt_tile(cell_coords)
-
-func _exit_tree() -> void:
-	melt_timers.clear() # SceneTreeTimers auto-clean
-
-func get_snow_tiles() -> Array[Vector2i]:
-	return snow_tiles.keys()
-
-func is_snow_tile(cell_coords: Vector2i) -> bool:
-	return snow_tiles.has(cell_coords)
+func debug_tile_states():
+	print("=== Tile States ===")
+	for cell_coords in snow_tiles.keys():
+		var data = snow_tiles[cell_coords]
+		print("Tile %s: melting=%s, rate=%.2f, neighbors=%d, melt_timer=%.2f" % [
+			cell_coords, data.is_melting, data.melt_rate, data.neighbor_count, data.melt_timer
+		])
