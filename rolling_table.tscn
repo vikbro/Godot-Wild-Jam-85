@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://dswslhi4hvr4y"]
+[gd_scene load_steps=14 format=3 uid="uid://dswslhi4hvr4y"]
 
 [ext_resource type="PackedScene" uid="uid://cyp1yh740uda6" path="res://rigid_body_3d_die.tscn" id="1_ef56s"]
+[ext_resource type="Script" uid="uid://dmcf4xkxdkbvu" path="res://rolling_table.gd" id="1_igpjx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cdh0g"]
+rough = true
 bounce = 1.0
+absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cdh0g"]
 
@@ -13,14 +16,28 @@ size = Vector3(100, 1, 100)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdh0g"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ef56s"]
+rough = true
 bounce = 1.0
+absorbent = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_igpjx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_nx5xl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4giy3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4106g"]
 
 [sub_resource type="Environment" id="Environment_ef56s"]
 ambient_light_color = Color(0.705882, 0, 0, 1)
 
+[sub_resource type="GDScript" id="GDScript_igpjx"]
+
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_igpjx")
 
 [node name="Table" type="StaticBody3D" parent="."]
+collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_cdh0g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Table"]
@@ -37,38 +54,53 @@ surface_material_override/0 = SubResource("StandardMaterial3D_cdh0g")
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
-transform = Transform3D(100, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, -50)
+transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, -50)
 shape = SubResource("BoxShape3D_cdh0g")
 debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall"]
+transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, -50)
+mesh = SubResource("BoxMesh_igpjx")
 
 [node name="Wall2" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
-transform = Transform3D(100, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 50)
+transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, 50)
 shape = SubResource("BoxShape3D_cdh0g")
 debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2"]
+transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, 50)
+mesh = SubResource("BoxMesh_nx5xl")
 
 [node name="Wall3" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3"]
-transform = Transform3D(-4.37114e-06, 0, 1, 0, 10, 0, -100, 0, -4.37114e-08, 50, 0, 0)
+transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, 50, 0, 0)
 shape = SubResource("BoxShape3D_cdh0g")
 debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall3"]
+transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, 50, 0, 0)
+mesh = SubResource("BoxMesh_4giy3")
 
 [node name="Wall4" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall4"]
-transform = Transform3D(-4.37114e-06, 0, 1, 0, 10, 0, -100, 0, -4.37114e-08, -50, 0, 0)
+transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, -50, 0, 0)
 shape = SubResource("BoxShape3D_cdh0g")
 debug_color = Color(0.333404, 0.196043, 0.470551, 1)
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall4"]
+transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, -50, 0, 0)
+mesh = SubResource("BoxMesh_4106g")
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.64679, -0.692333, 0.319903, 0, 0.419452, 0.907777, -0.762668, -0.587141, 0.271297, 29.7483, 49.5642, 20.2037)
-fov = 50.625
-near = 6.797
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 81.9685, 0)
+near = 10.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 100, 0)
@@ -78,11 +110,29 @@ spot_range = 465.467
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ef56s")
 
-[node name="RigidBody3D" parent="." instance=ExtResource("1_ef56s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.654358, -0.587026, 0.476672, -0.536074, 0.804705, 0.255099, 0.53333, 0.0886051, 0.841254, 57.6074, 88.7174, -68.8334)
 light_energy = 1.161
 light_indirect_energy = 3.101
 light_angular_distance = 65.45
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ResultLabel" type="Label" parent="CanvasLayer"]
+offset_left = 13.0
+offset_top = 34.0
+offset_right = 53.0
+offset_bottom = 57.0
+text = "bruh"
+script = SubResource("GDScript_igpjx")
+
+[node name="RigidBody3D" parent="." instance=ExtResource("1_ef56s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="Button" type="Button" parent="."]
+offset_right = 78.0
+offset_bottom = 31.0
+text = "ROLL DIE"
+
+[connection signal="roll_finished" from="RigidBody3D" to="." method="_on_rigid_body_3d_roll_finished"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
