@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cm5cf8wjcxcgb"]
+
+[ext_resource type="Shader" uid="uid://mavg5sgllqoq" path="res://assets/shaders/ice.gdshader" id="1_5clih"]
+
+[sub_resource type="Gradient" id="Gradient_5clih"]
+offsets = PackedFloat32Array(0.152542, 0.576271)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_43lgq"]
+noise_type = 3
+seed = 3
+frequency = 0.0207
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qxj6y"]
+color_ramp = SubResource("Gradient_5clih")
+noise = SubResource("FastNoiseLite_43lgq")
+
+[resource]
+shader = ExtResource("1_5clih")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_qxj6y")
+shader_parameter/snow_intensity = 0.385
+shader_parameter/coldness = 0.5
+shader_parameter/noise_scale = 3.774
+shader_parameter/snow_color = Color(0.69, 0.845, 1, 1)
+shader_parameter/edge_sharpness = 4.682
+shader_parameter/time_scale = 0.01
+shader_parameter/wind_direction = Vector2(0, 1)

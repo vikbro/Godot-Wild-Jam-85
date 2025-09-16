@@ -10,6 +10,12 @@ class_name TileController
 var is_dragging := false
 var processed_cells: Array[Vector2i] = []
 
+func change_whole_board() -> void:
+	for cell_coords in tile_map_layer.get_used_cells():
+		
+		pass
+	
+
 func _ready() -> void:
 	Events.exhausted_tiles.connect(_on_tiles_exhausted)
 	melt_logic.tile_melted.connect(_on_tile_melted)
@@ -37,15 +43,15 @@ func _input(event: InputEvent) -> void:
 		if event.pressed:
 			is_dragging = true
 			processed_cells.clear()
-			place_tile(get_global_mouse_position())
+			place_tile(get_global_mouse_position(), 1)
 		else:
 			is_dragging = false
 			processed_cells.clear()
 	elif event is InputEventMouseMotion and is_dragging:
-		place_tile(get_global_mouse_position())
+		place_tile(get_global_mouse_position(), 1)
 
 # --- Universal tile swap function ---
-func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_coords: Vector2i) -> void:
+func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_coords: Vector2i, alternative_tile: int = 0) -> void:
 	if processed_cells.has(cell_coords):
 		return
 	processed_cells.append(cell_coords)
@@ -56,19 +62,19 @@ func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_c
 
 	tile_map_layer.erase_cell(cell_coords)
 	await get_tree().create_timer(flip_duration * 0.5).timeout
-	tile_map_layer.set_cell(cell_coords, 1, replacement_atlas_coords)
+	tile_map_layer.set_cell(cell_coords, 1, replacement_atlas_coords, alternative_tile)
 
 	processed_cells.erase(cell_coords)
 
 # --- Placement with custom validation ---
-func place_tile(mouse_pos: Vector2, replacement_atlas_coords: Vector2i = Vector2i(1, 3)) -> void:
+func place_tile(mouse_pos: Vector2,alternative_atlas : int = 0) -> void:
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)
 	if not can_tile_be_changed(cell_coords):
 		return
 
 	var global_pos = tile_map_layer.map_to_local(cell_coords)
 	melt_logic.add_snow_tile(cell_coords)
-	change_tile(cell_coords, global_pos, replacement_atlas_coords)
+	change_tile(cell_coords, global_pos, tile_map_layer.get_cell_atlas_coords(cell_coords),alternative_atlas)
 	Events.on_tile_placement.emit()
 
 # --- Validation ---

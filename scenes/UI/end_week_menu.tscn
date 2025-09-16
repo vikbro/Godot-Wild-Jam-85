@@ -1,4 +1,4 @@
-[gd_scene load_steps=0 format=3 uid="uid://dxj1cf3dxej3b"]
+[gd_scene format=3 uid="uid://dxj1cf3dxej3b"]
 
 [node name="EndWeekMenu" type="Panel"]
 anchors_preset = 15
