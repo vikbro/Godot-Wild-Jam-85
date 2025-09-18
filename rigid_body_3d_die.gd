@@ -3,7 +3,7 @@ extends RigidBody3D
 @onready var raycasts = $RayCasts.get_children()
 
 var start_pos
-var roll_strength = 50
+var roll_strength = 100
 var is_rolling = false
 
 signal roll_finished(value)

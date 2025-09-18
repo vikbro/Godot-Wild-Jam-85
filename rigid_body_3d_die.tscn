@@ -1,61 +1,51 @@
-[gd_scene load_steps=7 format=3 uid="uid://cyp1yh740uda6"]
+[gd_scene load_steps=5 format=3 uid="uid://cyp1yh740uda6"]
 
 [ext_resource type="Script" uid="uid://dxfxl1i5wstor" path="res://rigid_body_3d_die.gd" id="1_embl8"]
 [ext_resource type="PackedScene" uid="uid://bi13jin2ioocn" path="res://scenes/die/die_ray_cast.tscn" id="2_fugk0"]
-[ext_resource type="Texture2D" uid="uid://dsd72mhxoo7xy" path="res://assets/real_dice_texture_flipped.png" id="2_j0pj1"]
+[ext_resource type="PackedScene" uid="uid://er6sy768qcoh" path="res://full_die1.glb" id="2_j0pj1"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fugk0"]
-albedo_texture = ExtResource("2_j0pj1")
-normal_scale = 15.68
-uv1_world_triplanar = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_embl8"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_j0pj1"]
-size = Vector3(1, 1, 0.906738)
+[sub_resource type="BoxShape3D" id="BoxShape3D_fugk0"]
+size = Vector3(10, 10, 10)
 
 [node name="RigidBody3D" type="RigidBody3D"]
+gravity_scale = 2.0
 script = ExtResource("1_embl8")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_fugk0")
-mesh = SubResource("BoxMesh_embl8")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-shape = SubResource("BoxShape3D_j0pj1")
-debug_color = Color(0.686275, 0, 0, 1)
+[node name="full_die1" parent="." instance=ExtResource("2_j0pj1")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 
 [node name="RayCasts" type="Node3D" parent="."]
 
 [node name="DieRayCast1" parent="RayCasts" instance=ExtResource("2_fugk0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 target_position = Vector3(0.1, 0, 0)
-opposite_side = 1
+opposite_side = 2
 
 [node name="DieRayCast2" parent="RayCasts" instance=ExtResource("2_fugk0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 target_position = Vector3(0, 0.1, 0)
-opposite_side = 2
+opposite_side = 3
 
 [node name="DieRayCast3" parent="RayCasts" instance=ExtResource("2_fugk0")]
 transform = Transform3D(-0.672625, 0, 0.739983, 0, 1, 0, -0.739983, 0, -0.672625, 0, 0, 5)
 target_position = Vector3(0, 0, 0.1)
-opposite_side = 3
+opposite_side = 6
 
 [node name="DieRayCast4" parent="RayCasts" instance=ExtResource("2_fugk0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 target_position = Vector3(0, 0, -0.1)
-opposite_side = 4
+opposite_side = 1
 
 [node name="DieRayCast5" parent="RayCasts" instance=ExtResource("2_fugk0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
-opposite_side = 5
+opposite_side = 4
 
 [node name="DieRayCast6" parent="RayCasts" instance=ExtResource("2_fugk0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
 target_position = Vector3(-0.1, 0, 0)
-opposite_side = 6
+opposite_side = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_fugk0")
 
 [connection signal="sleeping_state_changed" from="." to="." method="_on_sleeping_state_changed"]
