@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://f03lxm37cup1"]
+
+[ext_resource type="PackedScene" uid="uid://bmlsmr7nmdldg" path="res://scenes/Tiles/tile_controller.tscn" id="1_fkdrv"]
+[ext_resource type="Script" uid="uid://c21p8k8nl3ld4" path="res://scenes/Tiles/audio.gd" id="2_o21ul"]
+[ext_resource type="AudioStream" uid="uid://ckleiqtwx8qf2" path="res://Sound/Wind/strong-wind-1.mp3" id="3_y368g"]
+[ext_resource type="Script" uid="uid://sl8nuvgifgoi" path="res://scenes/Tiles/canvas_layer.gd" id="4_l5ivm"]
+[ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="5_xxpsm"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="TileController" parent="." instance=ExtResource("1_fkdrv")]
+
+[node name="Audio" type="Node2D" parent="."]
+script = ExtResource("2_o21ul")
+
+[node name="WindPlacement" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_y368g")
+volume_db = -25.0
+pitch_scale = 0.8
+max_polyphony = 10
+
+[node name="TileMelt" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+position = Vector2(207, 286)
+zoom = Vector2(2.95, 2.95)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("4_l5ivm")
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("5_xxpsm")]
+mouse_filter = 1

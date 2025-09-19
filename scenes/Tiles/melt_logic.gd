@@ -29,7 +29,7 @@ class SnowTileData:
 
 var snow_tiles: Dictionary = {}  # Key: Vector2i cell coordinates, Value: SnowTileData
 
-@export var base_melt_time: float = 4.0
+@export var base_melt_time: float = 19
 @export var neighbor_slow_factor: float = 0.7
 @export var check_interval: float = 0.1
 

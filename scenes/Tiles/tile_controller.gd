@@ -2,7 +2,6 @@ extends Node2D
 class_name TileController
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
-@onready var highlight_layer: HighlightTile = $HighlightTile
 @onready var melt_logic: MeltLogic = $MeltLogic
 
 @export var flip_duration := 0.5
@@ -28,7 +27,7 @@ func _process(delta: float) -> void:
 
 func _on_tile_melted(cell_coords: Vector2i, previous_data: MeltLogic.SnowTileData) -> void:
 	var global_pos = tile_map_layer.map_to_local(cell_coords)
-	change_tile(cell_coords, global_pos, previous_data.previous_atlas_coords)
+	change_tile(cell_coords, global_pos, previous_data.previous_atlas_coords,0)
 	print("Tile melted at ", cell_coords)
 
 func _on_snow_tile_added(cell_coords: Vector2i) -> void:
@@ -51,7 +50,7 @@ func _input(event: InputEvent) -> void:
 		place_tile(get_global_mouse_position(), 1)
 
 # --- Universal tile swap function ---
-func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_coords: Vector2i, alternative_tile: int = 0) -> void:
+func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_coords: Vector2i, source_id: int = 0) -> void:
 	if processed_cells.has(cell_coords):
 		return
 	processed_cells.append(cell_coords)
@@ -62,21 +61,21 @@ func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_c
 
 	tile_map_layer.erase_cell(cell_coords)
 	await get_tree().create_timer(flip_duration * 0.5).timeout
-	tile_map_layer.set_cell(cell_coords, 1, replacement_atlas_coords, alternative_tile)
+	tile_map_layer.set_cell(cell_coords, source_id, replacement_atlas_coords)
 
 	processed_cells.erase(cell_coords)
 
 # --- Placement with custom validation ---
-func place_tile(mouse_pos: Vector2,alternative_atlas : int = 0) -> void:
+func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)
 	if not can_tile_be_changed(cell_coords):
 		return
 
 	var global_pos = tile_map_layer.map_to_local(cell_coords)
 	melt_logic.add_snow_tile(cell_coords)
-	change_tile(cell_coords, global_pos, tile_map_layer.get_cell_atlas_coords(cell_coords),alternative_atlas)
+	change_tile(cell_coords, global_pos, tile_map_layer.get_cell_atlas_coords(cell_coords),source_id)
 	Events.on_tile_placement.emit()
-
+	
 # --- Validation ---
 func can_tile_be_changed(cell_coords: Vector2i) -> bool:
 	var tile_data = tile_map_layer.get_cell_tile_data(cell_coords)
@@ -110,7 +109,7 @@ func get_cell_texture(coord: Vector2i) -> Texture2D:
 	if source_id == -1:
 		return null
 
-	var source = tile_map_layer.tile_set.get_source(1)
+	var source = tile_map_layer.tile_set.get_source(source_id)
 	if not source or not source is TileSetAtlasSource:
 		return null
 
