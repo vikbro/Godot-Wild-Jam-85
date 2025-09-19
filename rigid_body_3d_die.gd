@@ -4,6 +4,7 @@ extends RigidBody3D
 
 var start_pos
 var roll_strength = 100
+
 var is_rolling = false
 
 signal roll_finished(value)

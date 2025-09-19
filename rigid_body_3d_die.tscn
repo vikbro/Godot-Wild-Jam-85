@@ -8,7 +8,8 @@
 size = Vector3(10, 10, 10)
 
 [node name="RigidBody3D" type="RigidBody3D"]
-gravity_scale = 2.0
+mass = 5.0
+gravity_scale = 5.0
 script = ExtResource("1_embl8")
 
 [node name="full_die1" parent="." instance=ExtResource("2_j0pj1")]
