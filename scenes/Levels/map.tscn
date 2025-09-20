@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://f03lxm37cup1"]
+[gd_scene load_steps=10 format=4 uid="uid://f03lxm37cup1"]
 
 [ext_resource type="TileSet" uid="uid://bmvb61mmppyjs" path="res://scenes/Tiles/Winter_Fall_Tiles.tres" id="1_41hek"]
 [ext_resource type="Script" uid="uid://qouji14njx4r" path="res://scenes/Levels/tile_manager.gd" id="1_bmqx8"]
@@ -9,9 +9,6 @@
 [ext_resource type="Script" uid="uid://sl8nuvgifgoi" path="res://scenes/Tiles/canvas_layer.gd" id="5_vun5d"]
 [ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="6_k7r7o"]
 [ext_resource type="PackedScene" uid="uid://dswslhi4hvr4y" path="res://rolling_table.tscn" id="9_tj4oi"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_vun5d"]
-viewport_path = NodePath("SubViewport")
 
 [node name="Map" type="Node2D"]
 
@@ -48,21 +45,30 @@ script = ExtResource("5_vun5d")
 [node name="UI" parent="CanvasLayer" instance=ExtResource("6_k7r7o")]
 mouse_filter = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-visible = false
-anchors_preset = 8
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+anchors_preset = 13
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -356.0
-offset_top = -206.0
-offset_right = 356.0
-offset_bottom = 206.0
+anchor_bottom = 1.0
+offset_left = -497.0
+offset_right = 497.0
+offset_bottom = -136.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ViewportTexture_vun5d")
+size_flags_horizontal = 3
+stretch = true
+stretch_shrink = 3
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(331, 170)
+render_target_update_mode = 4
 
-[node name="Node3D" parent="SubViewport" instance=ExtResource("9_tj4oi")]
+[node name="Node3D" parent="CanvasLayer/SubViewportContainer/SubViewport" instance=ExtResource("9_tj4oi")]
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
+transform = Transform3D(-4.37114e-08, 0.866025, -0.5, 0, 0.5, 0.866025, 1, 3.78552e-08, -2.18557e-08, -7.478, 48.345, 0)
+projection = 1
+fov = 82.7
+size = 100.0

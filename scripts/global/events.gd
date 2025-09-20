@@ -18,6 +18,9 @@ signal camera_movement_stop
 #UI
 signal higlight_tile_ui
 
+#Dice
+signal roll_dice
+
 #Dialogic
 signal timeline_started
 signal timeline_ended

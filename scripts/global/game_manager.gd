@@ -1,6 +1,7 @@
 extends Node
 
 var avaliable_tiles: int = 100
+var current_part: int = 0
 
 var has_clicked_tile: bool = false
 var has_clicked_water: bool = false
@@ -44,4 +45,7 @@ func decrease_avaliable_tiles(amount : int = 1) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("Roll_DEBUG"):
+		Events.roll_dice.emit()
+		
 	pass

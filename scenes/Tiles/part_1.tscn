@@ -32,6 +32,7 @@ sources/0 = SubResource("TileSetAtlasSource_53my0")
 y_sort_enabled = true
 script = ExtResource("1_sg250")
 timeline = ExtResource("2_etqte")
+part = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 y_sort_enabled = true

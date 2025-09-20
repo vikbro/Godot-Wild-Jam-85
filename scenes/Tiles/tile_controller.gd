@@ -9,6 +9,7 @@ class_name TileController
 
 @export var flip_duration := 0.5
 @export var timeline: DialogicTimeline
+@export var part: int
 
 var interactive_tiles : Array[Vector2i]
 
