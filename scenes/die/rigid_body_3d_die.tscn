@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyp1yh740uda6"]
 
-[ext_resource type="Script" uid="uid://dxfxl1i5wstor" path="res://rigid_body_3d_die.gd" id="1_embl8"]
+[ext_resource type="Script" uid="uid://dxfxl1i5wstor" path="res://scripts/die/rigid_body_3d_die.gd" id="1_embl8"]
 [ext_resource type="PackedScene" uid="uid://bi13jin2ioocn" path="res://scenes/die/die_ray_cast.tscn" id="2_fugk0"]
-[ext_resource type="PackedScene" uid="uid://er6sy768qcoh" path="res://full_die1.glb" id="2_j0pj1"]
+[ext_resource type="PackedScene" uid="uid://er6sy768qcoh" path="res://scenes/die/full_die1.glb" id="2_j0pj1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fugk0"]
 size = Vector3(10, 10, 10)

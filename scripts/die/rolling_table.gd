@@ -9,4 +9,4 @@ func _on_rigid_body_3d_roll_finished(value: Variant) -> void:
 
 func _on_button_pressed() -> void:
 	rigid_body_3d._roll()
-	#button.hide()
+	button.hide()
