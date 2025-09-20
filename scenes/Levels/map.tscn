@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://f03lxm37cup1"]
+[gd_scene load_steps=11 format=4 uid="uid://f03lxm37cup1"]
 
 [ext_resource type="TileSet" uid="uid://bmvb61mmppyjs" path="res://scenes/Tiles/Winter_Fall_Tiles.tres" id="1_41hek"]
 [ext_resource type="Script" uid="uid://qouji14njx4r" path="res://scenes/Levels/tile_manager.gd" id="1_bmqx8"]
@@ -8,6 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://ckleiqtwx8qf2" path="res://Sound/Wind/strong-wind-1.mp3" id="4_tj4oi"]
 [ext_resource type="Script" uid="uid://sl8nuvgifgoi" path="res://scenes/Tiles/canvas_layer.gd" id="5_vun5d"]
 [ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="6_k7r7o"]
+[ext_resource type="PackedScene" uid="uid://dswslhi4hvr4y" path="res://rolling_table.tscn" id="9_tj4oi"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vun5d"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Map" type="Node2D"]
 
@@ -43,3 +47,22 @@ script = ExtResource("5_vun5d")
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("6_k7r7o")]
 mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -206.0
+offset_right = 356.0
+offset_bottom = 206.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_vun5d")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Node3D" parent="SubViewport" instance=ExtResource("9_tj4oi")]
