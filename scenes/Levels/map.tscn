@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=4 uid="uid://f03lxm37cup1"]
+
+[ext_resource type="TileSet" uid="uid://bmvb61mmppyjs" path="res://scenes/Tiles/Winter_Fall_Tiles.tres" id="1_41hek"]
+[ext_resource type="Script" uid="uid://qouji14njx4r" path="res://scenes/Levels/tile_manager.gd" id="1_bmqx8"]
+[ext_resource type="PackedScene" uid="uid://bmlsmr7nmdldg" path="res://scenes/Tiles/part_1.tscn" id="2_wyvee"]
+[ext_resource type="Script" uid="uid://c21p8k8nl3ld4" path="res://scenes/Tiles/audio.gd" id="3_bmqx8"]
+[ext_resource type="PackedScene" uid="uid://k4k07ermsokr" path="res://scenes/Levels/part_2.tscn" id="3_wyvee"]
+[ext_resource type="AudioStream" uid="uid://ckleiqtwx8qf2" path="res://Sound/Wind/strong-wind-1.mp3" id="4_tj4oi"]
+[ext_resource type="Script" uid="uid://sl8nuvgifgoi" path="res://scenes/Tiles/canvas_layer.gd" id="5_vun5d"]
+[ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="6_k7r7o"]
+
+[node name="Map" type="Node2D"]
+
+[node name="Tiles" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("1_bmqx8")
+
+[node name="Background" type="TileMapLayer" parent="Tiles"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAADAPX/AQAAAAAAAAAEAPX/AQAAAAAAAAAJAPv/AQAAAAAAAAAEAPb/AQAAAAAAAAAFAPb/AQAAAAAAAAAFAPf/AQAAAAAAAAAGAPf/AQAAAAAAAAAGAPj/AQAAAAAAAAAHAPj/AQAAAAAAAAAHAPn/AQAAAAAAAAAIAPn/AQAAAAAAAAAIAPr/AQAAAAAAAAAJAPr/AQAAAAAAAAADAPT/AQAAAAAAAAACAPT/AQAAAAAAAAACAPP/AQAAAAAAAAABAPP/AQAAAAAAAAAKAPv/AQAAAAAAAAAKAPz/AQAAAAAAAAALAPz/AQAAAAAAAAALAP3/AQAAAAAAAAAMAP3/AQAAAAAAAAA=")
+tile_set = ExtResource("1_41hek")
+
+[node name="Part2" parent="Tiles" instance=ExtResource("3_wyvee")]
+
+[node name="Part1" parent="Tiles" instance=ExtResource("2_wyvee")]
+
+[node name="Audio" type="Node2D" parent="."]
+script = ExtResource("3_bmqx8")
+
+[node name="WindPlacement" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_tj4oi")
+volume_db = -25.0
+pitch_scale = 0.8
+max_polyphony = 10
+
+[node name="TileMelt" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(428, -3)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("5_vun5d")
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("6_k7r7o")]
+mouse_filter = 1

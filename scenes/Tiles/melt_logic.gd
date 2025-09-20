@@ -85,7 +85,6 @@ func melt_tile(cell_coords: Vector2i):
 		return
 	
 	var snow_data = snow_tiles[cell_coords]
-	
 	tile_melted.emit(cell_coords, snow_data)
 	
 	snow_tiles.erase(cell_coords)

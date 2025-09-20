@@ -1,0 +1,139 @@
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bmvb61mmppyjs"]
+
+[ext_resource type="Texture2D" uid="uid://dglbnsgsoifnw" path="res://assets/tileset/fall_tile.png" id="1_tx1fh"]
+[ext_resource type="Texture2D" uid="uid://cqnqa2ci2diau" path="res://assets/tileset/snowy_tile.png" id="2_txyny"]
+[ext_resource type="PackedScene" uid="uid://p57vbva5srdl" path="res://scenes/Tiles/placeholder_tile.tscn" id="3_gn6nx"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fy1vx"]
+resource_name = "Fall"
+texture = ExtResource("1_tx1fh")
+texture_region_size = Vector2i(65, 111)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, -11)
+3:0/0/custom_data_0 = true
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, -11)
+2:0/0/custom_data_0 = true
+1:0/0 = 0
+1:0/0/custom_data_0 = true
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+0:1/0 = 0
+0:1/0/custom_data_0 = true
+1:1/0 = 0
+1:1/0/custom_data_0 = true
+2:1/0 = 0
+2:1/0/custom_data_0 = true
+3:1/0 = 0
+3:1/0/custom_data_0 = true
+4:1/0 = 0
+4:1/0/custom_data_0 = true
+5:1/0 = 0
+5:1/0/custom_data_0 = true
+6:1/0 = 0
+6:1/0/custom_data_0 = true
+7:1/0 = 0
+7:1/0/custom_data_0 = true
+8:1/0 = 0
+8:1/0/custom_data_0 = true
+7:0/0 = 0
+7:0/0/texture_origin = Vector2i(0, 11)
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 11)
+5:0/0 = 0
+5:0/0/texture_origin = Vector2i(0, 11)
+0:2/0 = 0
+0:2/0/custom_data_0 = true
+1:2/0 = 0
+1:2/0/custom_data_0 = true
+2:2/0 = 0
+2:2/0/custom_data_0 = true
+3:2/0 = 0
+3:2/0/custom_data_0 = true
+4:2/0 = 0
+4:2/0/custom_data_0 = true
+5:2/0 = 0
+5:2/0/custom_data_0 = true
+6:2/0 = 0
+6:2/0/custom_data_0 = true
+7:2/0 = 0
+7:2/0/custom_data_0 = true
+8:2/0 = 0
+8:2/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ylcsh"]
+resource_name = "Winter"
+texture = ExtResource("2_txyny")
+texture_region_size = Vector2i(65, 111)
+0:2/0 = 0
+0:2/0/custom_data_1 = true
+1:2/0 = 0
+1:2/0/custom_data_1 = true
+2:2/0 = 0
+2:2/0/custom_data_1 = true
+3:2/0 = 0
+3:2/0/custom_data_1 = true
+4:2/0 = 0
+4:2/0/custom_data_1 = true
+5:2/0 = 0
+5:2/0/custom_data_1 = true
+6:2/0 = 0
+6:2/0/custom_data_1 = true
+7:2/0 = 0
+7:2/0/custom_data_1 = true
+8:2/0 = 0
+8:2/0/custom_data_1 = true
+8:1/0 = 0
+8:1/0/custom_data_1 = true
+7:1/0 = 0
+7:1/0/custom_data_1 = true
+6:1/0 = 0
+6:1/0/custom_data_1 = true
+5:1/0 = 0
+5:1/0/custom_data_1 = true
+4:1/0 = 0
+4:1/0/custom_data_1 = true
+3:1/0 = 0
+3:1/0/custom_data_1 = true
+2:1/0 = 0
+2:1/0/custom_data_1 = true
+1:1/0 = 0
+1:1/0/custom_data_1 = true
+0:1/0 = 0
+0:1/0/custom_data_1 = true
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, -11)
+3:0/0/custom_data_1 = true
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, -11)
+2:0/0/custom_data_1 = true
+1:0/0 = 0
+1:0/0/custom_data_1 = true
+0:0/0 = 0
+0:0/0/custom_data_1 = true
+5:0/0 = 0
+5:0/0/texture_origin = Vector2i(0, 11)
+5:0/0/custom_data_1 = true
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 11)
+6:0/0/custom_data_1 = true
+7:0/0 = 0
+7:0/0/texture_origin = Vector2i(0, 11)
+7:0/0/custom_data_1 = true
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_53my0"]
+scenes/5/scene = ExtResource("3_gn6nx")
+
+[resource]
+tile_shape = 3
+tile_layout = 5
+tile_size = Vector2i(65, 65)
+custom_data_layer_0/name = "can_change"
+custom_data_layer_0/type = 1
+custom_data_layer_1/name = "is_winter"
+custom_data_layer_1/type = 1
+custom_data_layer_2/name = "sig"
+custom_data_layer_2/type = 26
+sources/0 = SubResource("TileSetAtlasSource_fy1vx")
+sources/1 = SubResource("TileSetAtlasSource_ylcsh")
+sources/2 = SubResource("TileSetScenesCollectionSource_53my0")

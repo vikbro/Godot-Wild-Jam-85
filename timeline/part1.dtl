@@ -1,0 +1,4 @@
+Click on a tile to freeze it.
+[signal arg="higlight_tile_ui"]
+You have a limited amout of tiles you can freeze!
+Freeze all the tiles to win!
