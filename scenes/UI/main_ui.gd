@@ -10,6 +10,7 @@ func _ready() -> void:
 	Events.on_tile_placement.connect(_update_tile_amount)
 	Events.on_tile_hover.connect(_on_hover)
 	Events.higlight_tile_ui.connect(_highlight_tile_amount)
+	Events.roll_finished.connect(_update_tile_amount)
 	pass # Replace with function body.
 
 
@@ -26,7 +27,8 @@ func _highlight_tile_amount() -> void:
 
 func _on_hover(texture : Texture) -> void:
 	texture_rect.texture = texture
-	
-func _update_tile_amount() -> void:
+
+#value is only used from dice
+func _update_tile_amount(value:int= 0) -> void:
 	tile_amount.text = str(GameManager.avaliable_tiles)
 	

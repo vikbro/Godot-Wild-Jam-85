@@ -20,6 +20,7 @@ signal higlight_tile_ui
 
 #Dice
 signal roll_dice
+signal roll_finished(number:int)
 
 #Dialogic
 signal timeline_started

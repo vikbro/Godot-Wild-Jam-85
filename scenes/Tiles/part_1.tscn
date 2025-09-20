@@ -42,6 +42,7 @@ metadata/_edit_lock_ = true
 
 [node name="HighlightTileLayer" type="TileMapLayer" parent="TileMapLayer"]
 modulate = Color(1, 1, 1, 0.615686)
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAGAP7/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_j1ga8")
 script = ExtResource("4_qxco7")

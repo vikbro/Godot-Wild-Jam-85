@@ -1,7 +1,7 @@
 extends Node
 
 var avaliable_tiles: int = 100
-var current_part: int = 0
+var current_part: int = 1
 
 var has_clicked_tile: bool = false
 var has_clicked_water: bool = false
@@ -18,6 +18,7 @@ func _ready() -> void:
 	
 	Dialogic.timeline_started.connect(Events.timeline_started.emit)
 	Dialogic.timeline_ended.connect(Events.timeline_ended.emit)
+	Events.roll_finished.connect(_on_finished_roll_dice)
 
 func _on_dialogic_signal(argument:String):
 	if argument == "higlight_tile_ui":
@@ -29,6 +30,10 @@ func _on_tile_melting() -> void:
 	has_melted_tile = true
 	Dialogic.start("Melting")
 	
+func _on_finished_roll_dice(value:int )->void:
+	avaliable_tiles += value
+
+
 
 func decrease_avaliable_tiles(amount : int = 1) -> void:
 	avaliable_tiles -= 1

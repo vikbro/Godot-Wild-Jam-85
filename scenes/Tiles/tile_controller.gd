@@ -16,11 +16,23 @@ var interactive_tiles : Array[Vector2i]
 var is_dragging := false
 var processed_cells: Array[Vector2i] = []
 
+func check_level_complete() -> bool:
+	var used_cells: Array[Vector2i] = tile_map_layer.get_used_cells()
+
+	for cell_coord in used_cells:
+		var tile_data: TileData = tile_map_layer.get_cell_tile_data(cell_coord)
+
+		if not tile_data:
+			return false
+		if tile_data.get_custom_data("can_change"):
+			return false
+	return true
+	
+
 func change_whole_board() -> void:
 	for cell_coords in tile_map_layer.get_used_cells():
 		
 		pass
-	
 
 
 func _ready() -> void:
@@ -31,6 +43,10 @@ func _ready() -> void:
 		Dialogic.start(timeline)
 
 func _process(delta: float) -> void:
+	if part != GameManager.current_part:
+		set_process_input(false)
+	
+		
 	var mouse_pos = get_global_mouse_position()
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)
 	var texture = get_cell_texture(cell_coords)
@@ -79,7 +95,7 @@ func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_c
 # --- Placement with custom validation ---
 func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)
-	
+
 #	Check if placement is an interactable
 	if interactable_layer.tiles.has(cell_coords):
 		Events.camera_movement_start.emit()
@@ -94,6 +110,9 @@ func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 	melt_logic.add_snow_tile(cell_coords)
 	change_tile(cell_coords, global_pos, tile_map_layer.get_cell_atlas_coords(cell_coords),source_id)
 	Events.on_tile_placement.emit()
+	
+	if check_level_complete():
+		Events.exhausted_tiles.emit(part)
 	
 # --- Validation ---
 func can_tile_be_changed(cell_coords: Vector2i) -> bool:

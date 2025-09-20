@@ -28,6 +28,7 @@ class SnowTileData:
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 
 var snow_tiles: Dictionary = {}  # Key: Vector2i cell coordinates, Value: SnowTileData
+var melt_timer: Timer  # Store reference to the timer
 
 @export var base_melt_time: float = 19
 @export var neighbor_slow_factor: float = 0.7
@@ -40,15 +41,24 @@ var hex_directions = [
 ]
 
 func _ready():
-	
+	Events.exhausted_tiles.connect(_onexhausted_tiles)
 	start_melting()
 
+func _onexhausted_tiles(part:int) -> void:
+	var parent_part = $"..".part
+	if part == parent_part:
+		set_process(false)
+		# Stop the melt timer instead of all children
+		if melt_timer:
+			melt_timer.stop()
+		pass
+
 func start_melting():
-	var timer = Timer.new()
-	timer.wait_time = check_interval
-	timer.timeout.connect(_process_melting)
-	add_child(timer)
-	timer.start()
+	melt_timer = Timer.new()  # Store the reference
+	melt_timer.wait_time = check_interval
+	melt_timer.timeout.connect(_process_melting)
+	add_child(melt_timer)
+	melt_timer.start()
 
 func add_snow_tile(cell_coords: Vector2i):
 	# Get the previous tile's atlas coordinates
