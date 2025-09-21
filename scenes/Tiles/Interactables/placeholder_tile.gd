@@ -30,7 +30,7 @@ func interact() -> void:
 	tween.parallel().tween_property(alien_beige,"self_modulate:a",0,animation_duration)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(alien_beige,"position",Vector2(100,-100),animation_duration)
-	
+	tween.finished.connect(Events.camera_after_anim.emit)
 	#tween.finished.connect(_remove_overlay.bind(overlay))
 
 	

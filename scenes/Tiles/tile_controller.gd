@@ -86,7 +86,6 @@ func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 #		Camera zoom
 		await Events.camera_movement_stop
 		interactable_layer.tiles[cell_coords].interact()
-		Events.camera_after_anim.emit()
 		await Events.camera_after_anim_finish
 		pass
 	
