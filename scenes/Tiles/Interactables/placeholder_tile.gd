@@ -8,7 +8,7 @@ class_name PlaceholderInteractable
 @onready var alien_beige: Sprite2D = $AlienBeige
 
 var tile_coords : Vector2i
-
+var birds = bool (true)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#interact()
@@ -24,6 +24,7 @@ func _process(delta: float) -> void:
 
 func interact() -> void:
 	#await Events.camera_movement_stop
+	
 	var tween:Tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(alien_beige,"self_modulate:a",0,animation_duration)
@@ -32,5 +33,4 @@ func interact() -> void:
 	tween.finished.connect(Events.camera_after_anim.emit)
 	tween.finished.connect(Events.start_placement.emit)
 
-	
 	pass

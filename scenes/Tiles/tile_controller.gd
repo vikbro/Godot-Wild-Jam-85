@@ -98,7 +98,7 @@ func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_c
 # --- Placement with custom validation ---
 func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)
-
+	
 #	Check if placement is an interactable
 	if interactable_layer.tiles.has(cell_coords):
 		Events.stop_placement.emit()
@@ -107,6 +107,8 @@ func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 		await Events.camera_movement_stop
 		interactable_layer.tiles[cell_coords].interact()
 		await Events.camera_after_anim_finish
+		interactable_layer.erase_cell(cell_coords)
+		interactable_layer.erase_code(cell_coords)
 		pass
 	
 	if not can_tile_be_changed(cell_coords):
@@ -119,7 +121,7 @@ func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 	
 	if check_level_complete():
 		Events.exhausted_tiles.emit(part)
-	
+		
 # --- Validation ---
 func can_tile_be_changed(cell_coords: Vector2i) -> bool:
 	var tile_data = tile_map_layer.get_cell_tile_data(cell_coords)
