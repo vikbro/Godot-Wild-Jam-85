@@ -13,7 +13,7 @@ script = ExtResource("1_7dr7o")
 
 [node name="Panel" type="Panel" parent="."]
 self_modulate = Color(0, 1, 0, 0.415686)
-custom_minimum_size = Vector2(200, 120)
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -32,30 +32,33 @@ grow_vertical = 2
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 32
 max_value = 6.0
 value = 6.0
 fill_mode = 1
 
 [node name="TileAmount" type="Label" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 32
 text = "10"
 
 [node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer"]
 layout_mode = 2
+expand_mode = 3
 
 [node name="Rolls" type="Label" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 32
 text = "Rolls: "
 
 [node name="Rolls2" type="Label" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 32
 text = "0"
 
 [node name="Button" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 53
-text = "ROLL"
+theme_override_font_sizes/font_size = 32
+text = "Roll"
+
+[connection signal="pressed" from="Panel/HBoxContainer/Button" to="." method="_on_button_pressed"]

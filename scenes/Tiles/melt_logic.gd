@@ -30,8 +30,8 @@ class SnowTileData:
 var snow_tiles: Dictionary = {}  # Key: Vector2i cell coordinates, Value: SnowTileData
 var melt_timer: Timer  # Store reference to the timer
 
-@export var base_melt_time: float = 19
-@export var neighbor_slow_factor: float = 0.7
+@export var base_melt_time: float = 12
+@export var neighbor_slow_factor: float = 0.8
 @export var check_interval: float = 0.1
 
 # Hexagonal neighbor directions

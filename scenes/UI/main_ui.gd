@@ -4,6 +4,7 @@ extends Control
 @onready var texture_rect: TextureRect = $Panel/HBoxContainer/TextureRect
 @onready var progress_bar: ProgressBar = $Panel/HBoxContainer/ProgressBar
 @onready var rolls_2: Label = $Panel/HBoxContainer/Rolls2
+@onready var button: Button = $Panel/HBoxContainer/Button
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,10 +17,23 @@ func _ready() -> void:
 	Events.roll_finished.connect(_update_tile_amount)
 	Events.roll_finished.connect(_start_cooldown)
 	Events.roll_finished.connect(_update_roll_amount)
+	Events.roll_finished.connect(_update_roll_amount)
+	
+	Events.start_placement.connect(_enable_btn)
+	Events.stop_placement.connect(_disable_btn)
+	
+	Events.roll_finished.connect(_enable_btn)
+	
 	#_start_cooldown(6)
 	pass # Replace with function body.
 
+func _disable_btn() -> void:
+	button.disabled = true
 
+func _enable_btn() -> void:
+	button.disabled = false
+
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -50,3 +64,9 @@ func _update_tile_amount(value:int= 0) -> void:
 	
 func _update_roll_amount(value:int = 0) -> void:
 	rolls_2.text = str(GameManager.roll_amount)
+
+
+func _on_button_pressed() -> void:
+	Events.roll_dice.emit()
+	_disable_btn()
+	pass # Replace with function body.

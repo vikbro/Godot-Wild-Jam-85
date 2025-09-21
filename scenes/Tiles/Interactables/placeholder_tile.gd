@@ -2,6 +2,7 @@ extends Node2D
 class_name PlaceholderInteractable
 
 @export var animation_duration : float = 2.0
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @onready var fall_sprite: Sprite2D = $FallSprite
 @onready var winter_sprite: Sprite2D = $WinterSprite
@@ -24,7 +25,7 @@ func _process(delta: float) -> void:
 
 func interact() -> void:
 	#await Events.camera_movement_stop
-	
+	animation_player.play("fly")
 	var tween:Tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(alien_beige,"self_modulate:a",0,animation_duration)

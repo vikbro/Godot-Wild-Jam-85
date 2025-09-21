@@ -69,7 +69,7 @@ func decrease_avaliable_tiles(amount : int = 1) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("Roll_DEBUG"):
-		Events.roll_dice.emit()
-		
+	#if Input.is_action_just_pressed("Roll_DEBUG"):
+		#Events.roll_dice.emit()
+		#
 	pass
