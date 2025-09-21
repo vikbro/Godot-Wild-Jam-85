@@ -63,6 +63,7 @@ y_sort_enabled = true
 script = ExtResource("1_bmqx8")
 
 [node name="Background" type="TileMapLayer" parent="Tiles"]
+visible = false
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAADAPX/AQAAAAAAAAAEAPX/AQAAAAAAAAAJAPv/AQAAAAAAAAAEAPb/AQAAAAAAAAAFAPb/AQAAAAAAAAAFAPf/AQAAAAAAAAAGAPf/AQAAAAAAAAAGAPj/AQAAAAAAAAAHAPj/AQAAAAAAAAAHAPn/AQAAAAAAAAAIAPn/AQAAAAAAAAAIAPr/AQAAAAAAAAAJAPr/AQAAAAAAAAADAPT/AQAAAAAAAAACAPT/AQAAAAAAAAACAPP/AQAAAAAAAAABAPP/AQAAAAAAAAAKAPv/AQAAAAAAAAAKAPz/AQAAAAAAAAALAPz/AQAAAAAAAAALAP3/AQAAAAAAAAAMAP3/AQAAAAAAAAA=")
 tile_set = ExtResource("1_41hek")
@@ -83,6 +84,7 @@ max_polyphony = 10
 [node name="TileMelt" type="AudioStreamPlayer" parent="Audio"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.91, 2.91)
 script = ExtResource("7_vun5d")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Camera2D"]
