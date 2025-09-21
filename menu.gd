@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var button: Button = $Control/Label/Button
 @onready var music: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var button: Button = $Control/Button
 
 func _ready():
 	music.stream = load("res://Sound/lovely-winter-63497.mp3")
