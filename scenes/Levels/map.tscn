@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://b5vjdkdf50qbv"]
+[gd_scene load_steps=19 format=4 uid="uid://f03lxm37cup1"]
 
 [ext_resource type="TileSet" uid="uid://bmvb61mmppyjs" path="res://scenes/Tiles/Winter_Fall_Tiles.tres" id="1_41hek"]
 [ext_resource type="Script" uid="uid://qouji14njx4r" path="res://scenes/Levels/tile_manager.gd" id="1_bmqx8"]
@@ -10,8 +10,50 @@
 [ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="6_k7r7o"]
 [ext_resource type="PackedScene" uid="uid://dswslhi4hvr4y" path="res://scenes/die/rolling_table.tscn" id="9_tj4oi"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_vun5d"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="Gradient" id="Gradient_tj4oi"]
+offsets = PackedFloat32Array(0.00189036, 0.529301, 1)
+colors = PackedColorArray(0.407843, 0.580392, 0.643137, 0.254902, 1, 1, 1, 0.796078, 0.407843, 0.580392, 0.643137, 0.721569)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vun5d"]
+gradient = SubResource("Gradient_tj4oi")
+width = 1
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_k7r7o"]
+offsets = PackedFloat32Array(0.00925926, 0.773148)
+colors = PackedColorArray(1, 1, 1, 0.137255, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wwlet"]
+gradient = SubResource("Gradient_k7r7o")
+
+[sub_resource type="Gradient" id="Gradient_1h3ao"]
+offsets = PackedFloat32Array(0, 0.405063, 0.639241, 1)
+colors = PackedColorArray(1, 1, 1, 0.141176, 1, 1, 1, 0.831549, 1, 1, 1, 1, 1, 1, 1, 0.137255)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ktgki"]
+gradient = SubResource("Gradient_1h3ao")
+
+[sub_resource type="Curve" id="Curve_wgsyv"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.1, 40), 0.0, 0.0, 0, 0, Vector2(0.2, -40), 0.0, 0.0, 0, 0, Vector2(0.3, 40), 0.0, 0.0, 0, 0, Vector2(0.4, -40), 0.0, 0.0, 0, 0, Vector2(0.5, 40), 0.0, 0.0, 0, 0, Vector2(0.6, -40), 0.0, 0.0, 0, 0, Vector2(0.7, 40), 0.0, 0.0, 0, 0, Vector2(0.8, -40), 0.0, 0.0, 0, 0, Vector2(0.9, 40), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 11
+
+[sub_resource type="CurveTexture" id="CurveTexture_am7ri"]
+curve = SubResource("Curve_wgsyv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tj4oi"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(250, 250, 1)
+gravity = Vector3(100, 20, 0)
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = 10.0
+tangential_accel_curve = SubResource("CurveTexture_am7ri")
+damping_max = 100.0
+scale_min = 1.5
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_ktgki")
+color_initial_ramp = SubResource("GradientTexture1D_wwlet")
 
 [node name="Map" type="Node2D"]
 
@@ -40,7 +82,16 @@ max_polyphony = 10
 [node name="TileMelt" type="AudioStreamPlayer" parent="Audio"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(428, -3)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Camera2D"]
+amount = 15
+texture = SubResource("GradientTexture2D_vun5d")
+lifetime = 5.0
+preprocess = 2.0
+randomness = 1.0
+trail_enabled = true
+trail_lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_tj4oi")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("5_vun5d")
@@ -48,21 +99,30 @@ script = ExtResource("5_vun5d")
 [node name="UI" parent="CanvasLayer" instance=ExtResource("6_k7r7o")]
 mouse_filter = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-visible = false
-anchors_preset = 8
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+anchors_preset = 13
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -356.0
-offset_top = -206.0
-offset_right = 356.0
-offset_bottom = 206.0
+anchor_bottom = 1.0
+offset_left = -497.0
+offset_right = 497.0
+offset_bottom = -136.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ViewportTexture_vun5d")
+size_flags_horizontal = 3
+stretch = true
+stretch_shrink = 2
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(497, 256)
+render_target_update_mode = 4
 
-[node name="Node3D" parent="SubViewport" instance=ExtResource("9_tj4oi")]
+[node name="Node3D" parent="CanvasLayer/SubViewportContainer/SubViewport" instance=ExtResource("9_tj4oi")]
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
+transform = Transform3D(-4.37114e-08, 0.866025, -0.5, 0, 0.5, 0.866025, 1, 3.78552e-08, -2.18557e-08, -7.478, 48.345, 0)
+projection = 1
+fov = 82.7
+size = 100.0

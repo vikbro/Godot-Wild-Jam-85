@@ -3,7 +3,7 @@ extends CanvasLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Events.exhausted_tiles.connect(_show_end_week_menu)
+	#Events.exhausted_tiles.connect(_show_end_week_menu)
 	pass # Replace with function body.
 
 func _show_end_week_menu() -> void:

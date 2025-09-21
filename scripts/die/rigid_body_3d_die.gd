@@ -3,7 +3,7 @@ extends RigidBody3D
 @onready var raycasts = $RayCasts.get_children()
 
 var start_pos
-var roll_strength = 100
+var roll_strength = 50
 
 var is_rolling = false
 
@@ -40,7 +40,7 @@ func _on_sleeping_state_changed() -> void:
 		var land_side = false
 		for raycast in raycasts:
 			if raycast.is_colliding():
-				#Events.
+				Events.roll_finished.emit(raycast.opposite_side)
 				roll_finished.emit(raycast.opposite_side)
 				is_rolling = false
 				land_side = true

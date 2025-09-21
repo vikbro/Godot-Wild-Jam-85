@@ -4,6 +4,9 @@ extends Node3D
 @onready var result_label = $CanvasLayer/ResultLabel
 @onready var button: Button = $Button
 
+func _ready() -> void:
+	Events.roll_dice.connect(rigid_body_3d._roll)
+
 func _on_rigid_body_3d_roll_finished(value: Variant) -> void:
 	result_label.text = str(value)
 

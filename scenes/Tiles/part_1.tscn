@@ -33,6 +33,7 @@ sources/0 = SubResource("TileSetAtlasSource_53my0")
 y_sort_enabled = true
 script = ExtResource("1_sg250")
 timeline = ExtResource("2_etqte")
+part = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 y_sort_enabled = true
@@ -42,6 +43,7 @@ metadata/_edit_lock_ = true
 
 [node name="HighlightTileLayer" type="TileMapLayer" parent="TileMapLayer"]
 modulate = Color(1, 1, 1, 0.615686)
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAGAP7/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_j1ga8")
 script = ExtResource("4_qxco7")

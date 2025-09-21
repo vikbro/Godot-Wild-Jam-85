@@ -30,6 +30,7 @@ sources/0 = SubResource("TileSetAtlasSource_53my0")
 [node name="Part2" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_k6n2c")
+part = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 y_sort_enabled = true

@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://dswslhi4hvr4y"]
+[gd_scene load_steps=18 format=3 uid="uid://dswslhi4hvr4y"]
 
-[ext_resource type="Script" uid="uid://dmcf4xkxdkbvu" path="res://scripts/die/rolling_table.gd" id="1_tpdiy"]
-[ext_resource type="PackedScene" uid="uid://cyp1yh740uda6" path="res://scenes/die/rigid_body_3d_die.tscn" id="2_yw4fu"]
+[ext_resource type="PackedScene" uid="uid://cyp1yh740uda6" path="res://scenes/die/rigid_body_3d_die.tscn" id="1_ef56s"]
+[ext_resource type="Script" uid="uid://dmcf4xkxdkbvu" path="res://scripts/die/rolling_table.gd" id="1_igpjx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cdh0g"]
 rough = true
@@ -9,6 +9,7 @@ bounce = 1.0
 absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cdh0g"]
+size = Vector3(2.16943, 1, 1.46741)
 
 [sub_resource type="BoxMesh" id="BoxMesh_cdh0g"]
 size = Vector3(100, 1, 100)
@@ -20,11 +21,19 @@ rough = true
 bounce = 1.0
 absorbent = true
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_igpjx"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_igpjx"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_nx5xl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_nx5xl"]
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4giy3"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_4giy3"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4106g"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4106g"]
 
@@ -34,29 +43,30 @@ ambient_light_color = Color(0.705882, 0, 0, 1)
 [sub_resource type="GDScript" id="GDScript_igpjx"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_tpdiy")
+script = ExtResource("1_igpjx")
 
 [node name="Table" type="StaticBody3D" parent="."]
 collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_cdh0g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Table"]
-transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -5, 0)
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 30.8838, -5, -8.97827)
 shape = SubResource("BoxShape3D_cdh0g")
 debug_color = Color(0.333404, 0.196043, 0.470551, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+visible = false
 mesh = SubResource("BoxMesh_cdh0g")
 surface_material_override/0 = SubResource("StandardMaterial3D_cdh0g")
 
 [node name="Wall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
-transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, -50)
-shape = SubResource("BoxShape3D_cdh0g")
-debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+transform = Transform3D(100, 0, 0, 0, -2.18557e-06, -1, 0, 50, -4.37114e-08, 0, 0, -54.063)
+shape = SubResource("WorldBoundaryShape3D_igpjx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall"]
 transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, -25)
@@ -67,9 +77,8 @@ mesh = SubResource("BoxMesh_igpjx")
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
-transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, 25)
-shape = SubResource("BoxShape3D_cdh0g")
-debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+transform = Transform3D(100, 0, 0, 0, -2.18557e-06, 1, 0, -50, -4.37114e-08, 0, 0, 47.1709)
+shape = SubResource("WorldBoundaryShape3D_nx5xl")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2"]
 transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 1, 0, 0, 25)
@@ -80,9 +89,8 @@ mesh = SubResource("BoxMesh_nx5xl")
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3"]
-transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, 35, 0, 0)
-shape = SubResource("BoxShape3D_cdh0g")
-debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+transform = Transform3D(-4.37114e-06, -50, -4.37114e-08, 0, -2.18557e-06, 1, -100, 2.18557e-06, 1.91069e-15, 63.312, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_4giy3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall3"]
 transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, 25, 0, 0)
@@ -93,19 +101,13 @@ mesh = SubResource("BoxMesh_4giy3")
 physics_material_override = SubResource("PhysicsMaterial_ef56s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall4"]
-transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, -35, 0, 0)
-shape = SubResource("BoxShape3D_cdh0g")
-debug_color = Color(0.333404, 0.196043, 0.470551, 1)
+transform = Transform3D(-4.37114e-06, 50, -4.37114e-08, 0, -2.18557e-06, -1, -100, -2.18557e-06, 1.91069e-15, -18.9441, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_4106g")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall4"]
 transform = Transform3D(-4.37114e-06, 0, 1, 0, 50, 0, -100, 0, -4.37114e-08, -25, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_4106g")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.795473, 0.605988, 0, -0.605988, 0.795473, 0, 80, 120)
-fov = 25.0
-near = 10.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 100, 0)
@@ -122,20 +124,30 @@ light_indirect_energy = 3.101
 light_angular_distance = 65.45
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ResultLabel" type="Label" parent="CanvasLayer"]
 offset_left = 13.0
 offset_top = 34.0
 offset_right = 53.0
 offset_bottom = 57.0
+text = "bruh"
 script = SubResource("GDScript_igpjx")
 
-[node name="RigidBody3D" parent="." instance=ExtResource("2_yw4fu")]
+[node name="RigidBody3D" parent="." instance=ExtResource("1_ef56s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5576, 0, 0)
 
 [node name="Button" type="Button" parent="."]
+visible = false
 offset_right = 78.0
 offset_bottom = 31.0
 text = "ROLL DIE"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.866025, -0.5, 0, 0.5, 0.866025, 1, 3.78552e-08, -2.18557e-08, -7.478, 48.345, 0)
+projection = 1
+fov = 82.7
+size = 100.0
 
 [connection signal="roll_finished" from="RigidBody3D" to="." method="_on_rigid_body_3d_roll_finished"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
