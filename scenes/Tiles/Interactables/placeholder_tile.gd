@@ -2,7 +2,8 @@ extends Node2D
 class_name PlaceholderInteractable
 
 @export var animation_duration : float = 2.0
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @onready var alien_beige: Sprite2D = $AlienBeige
 
@@ -11,7 +12,7 @@ var birds = bool (true)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#interact()
-	
+	audio_stream_player.stream = load("res://Sound/pigeons-flying-6351.mp3")
 	pass # Replace with function body.
 
 
@@ -23,7 +24,8 @@ func _process(delta: float) -> void:
 
 func interact() -> void:
 	#await Events.camera_movement_stop
-	animation_player.play("fly")
+	
+	audio_stream_player.play()
 	var tween:Tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(alien_beige,"self_modulate:a",0,animation_duration)
