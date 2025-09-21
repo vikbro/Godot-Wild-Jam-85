@@ -20,8 +20,10 @@ func _show_end_week_menu() -> void:
 	var scene_instance = load("res://scenes/UI/end_week_menu.tscn").instantiate()
 	add_child(scene_instance)
 
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://MENU.tscn")
