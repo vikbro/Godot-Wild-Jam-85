@@ -2,12 +2,12 @@ extends Camera2D
 
 var cam_zoom = Vector2(1.3, 1.3)
 var og_cam_zoom = zoom
-var start_pos
+var start_pos = global_position
 
 func _ready() -> void:
-	start_pos = global_position
 	Events.camera_movement_start.connect(moving_birds)
 	Events.camera_after_anim.connect(restoring_camera_pos)
+	Events.exhausted_tiles.connect(next_part)
 
 func moving_birds(bird_pos: Vector2):
 	var tween : Tween = get_tree().create_tween()
@@ -20,3 +20,9 @@ func restoring_camera_pos():
 	tween.tween_property(self, "position", start_pos, 1)
 	tween.parallel().tween_property(self, "zoom", og_cam_zoom, 1)
 	tween.finished.connect(Events.camera_after_anim_finish.emit)
+
+func next_part():
+	start_pos += Vector2(100, 0)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(self, "position", start_pos, 1)
+	
