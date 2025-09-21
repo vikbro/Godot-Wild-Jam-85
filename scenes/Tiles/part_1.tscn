@@ -29,11 +29,12 @@ tile_layout = 5
 tile_size = Vector2i(65, 65)
 sources/0 = SubResource("TileSetAtlasSource_53my0")
 
-[node name="Part1" type="Node2D"]
+[node name="Part1" type="Node2D" node_paths=PackedStringArray("camera_pos")]
 y_sort_enabled = true
 script = ExtResource("1_sg250")
 timeline = ExtResource("2_etqte")
 part = 1
+camera_pos = NodePath("Marker2D")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 y_sort_enabled = true
@@ -64,6 +65,7 @@ neighbor_slow_factor = 0.8
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 script = ExtResource("7_2ultt")
 
 [node name="Marker2D" type="Marker2D" parent="."]

@@ -58,4 +58,7 @@ base_melt_time = 7.0
 [node name="VisualEffects" type="Node2D" parent="."]
 visible = false
 
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(950, 0)
+
 [connection signal="child_entered_tree" from="Interactable" to="Interactable" method="_on_child_entered_tree"]
