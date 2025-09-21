@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://dswslhi4hvr4y"]
 
-[ext_resource type="PackedScene" uid="uid://cyp1yh740uda6" path="res://rigid_body_3d_die.tscn" id="1_ef56s"]
-[ext_resource type="Script" uid="uid://dmcf4xkxdkbvu" path="res://rolling_table.gd" id="1_igpjx"]
+[ext_resource type="Script" uid="uid://dmcf4xkxdkbvu" path="res://scripts/die/rolling_table.gd" id="1_tpdiy"]
+[ext_resource type="PackedScene" uid="uid://cyp1yh740uda6" path="res://scenes/die/rigid_body_3d_die.tscn" id="2_yw4fu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cdh0g"]
 rough = true
@@ -43,7 +43,7 @@ ambient_light_color = Color(0.705882, 0, 0, 1)
 [sub_resource type="GDScript" id="GDScript_igpjx"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_igpjx")
+script = ExtResource("1_tpdiy")
 
 [node name="Table" type="StaticBody3D" parent="."]
 collision_layer = 3
@@ -130,7 +130,6 @@ offset_left = 13.0
 offset_top = 34.0
 offset_right = 53.0
 offset_bottom = 57.0
-text = "bruh"
 script = SubResource("GDScript_igpjx")
 
 [node name="RigidBody3D" parent="." instance=ExtResource("1_ef56s")]

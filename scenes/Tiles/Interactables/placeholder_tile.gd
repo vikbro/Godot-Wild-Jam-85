@@ -32,5 +32,7 @@ func interact() -> void:
 	tween.parallel().tween_property(alien_beige,"position",Vector2(100,-100),animation_duration)
 	
 	#tween.finished.connect(Events.interactable_stopped.emit)
+	#tween.finished.connect(_remove_overlay.bind(overlay))
+
 	
 	pass

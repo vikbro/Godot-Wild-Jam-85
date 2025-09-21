@@ -1,5 +1,6 @@
 extends Node2D
 class_name TileController
+@onready var camera_2d: Camera2D = $Camera2D
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var highlight_tile_layer: HighlightTile = $TileMapLayer/HighlightTileLayer
@@ -98,10 +99,13 @@ func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 
 #	Check if placement is an interactable
 	if interactable_layer.tiles.has(cell_coords):
-		Events.camera_movement_start.emit()
+		Events.camera_movement_start.emit(mouse_pos)
 #		Camera zoom
+		await Events.camera_movement_stop
 		interactable_layer.tiles[cell_coords].interact()
-		pass	
+		Events.camera_after_anim.emit()
+		await Events.camera_after_anim_finish
+		pass
 	
 	if not can_tile_be_changed(cell_coords):
 		return

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://bmlsmr7nmdldg"]
+[gd_scene load_steps=11 format=4 uid="uid://bmlsmr7nmdldg"]
 
 [ext_resource type="Script" uid="uid://c55hsce6tmvd5" path="res://scenes/Tiles/tile_controller.gd" id="1_sg250"]
 [ext_resource type="TileSet" uid="uid://bmvb61mmppyjs" path="res://scenes/Tiles/Winter_Fall_Tiles.tres" id="2_4uw7a"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://daq82wjgw2cmp" path="res://scenes/Tiles/cell_highlights.gd" id="4_qxco7"]
 [ext_resource type="Script" uid="uid://cdemajdy7vfpm" path="res://scenes/Tiles/melt_logic.gd" id="5_j1ga8"]
 [ext_resource type="Script" uid="uid://dio5ujn8r51h4" path="res://scenes/Tiles/interactable.gd" id="5_qxco7"]
+[ext_resource type="Script" uid="uid://br3rv85e21esh" path="res://scenes/Tiles/camera_2d.gd" id="7_2ultt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_53my0"]
 texture = ExtResource("2_gkvgq")
@@ -61,5 +62,8 @@ neighbor_slow_factor = 0.8
 
 [node name="VisualEffects" type="Node2D" parent="."]
 visible = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("7_2ultt")
 
 [connection signal="child_entered_tree" from="Interactable" to="Interactable" method="_on_child_entered_tree"]
