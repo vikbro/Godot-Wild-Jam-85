@@ -17,7 +17,7 @@ func _ready() -> void:
 	Events.roll_finished.connect(_update_tile_amount)
 	Events.roll_finished.connect(_start_cooldown)
 	Events.roll_finished.connect(_update_roll_amount)
-	Events.roll_finished.connect(_update_roll_amount)
+	#Events.roll_finished.connect(_update_roll_amount)
 	
 	Events.start_placement.connect(_enable_btn)
 	Events.stop_placement.connect(_disable_btn)

@@ -1,6 +1,5 @@
 extends Node2D
 class_name TileController
-@onready var camera_2d: Camera2D = $Camera2D
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var highlight_tile_layer: HighlightTile = $TileMapLayer/HighlightTileLayer

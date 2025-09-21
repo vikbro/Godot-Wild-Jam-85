@@ -4,8 +4,6 @@ class_name PlaceholderInteractable
 @export var animation_duration : float = 2.0
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-@onready var fall_sprite: Sprite2D = $FallSprite
-@onready var winter_sprite: Sprite2D = $WinterSprite
 @onready var alien_beige: Sprite2D = $AlienBeige
 
 var tile_coords : Vector2i
