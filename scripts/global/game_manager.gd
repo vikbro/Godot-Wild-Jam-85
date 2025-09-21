@@ -25,6 +25,12 @@ func _ready() -> void:
 	
 	Events.stop_placement.connect(_on_stop_input)
 	Events.start_placement.connect(_on_start_input)
+	Events.exhausted_tiles.connect(_on_exhausted_tiles)
+
+func _on_exhausted_tiles(value : int) -> void:
+	Events.start_placement.emit()
+	current_part += 1
+
 func _on_dialogic_signal(argument:String):
 	if argument == "higlight_tile_ui":
 		Events.higlight_tile_ui.emit()
@@ -36,6 +42,7 @@ func _on_stop_input() -> void:
 
 func _on_start_input() -> void:
 	placement_enabled = true
+
 func _on_tile_melting() -> void:
 	has_melted_tile = true
 	Dialogic.start("Melting")
@@ -43,7 +50,7 @@ func _on_tile_melting() -> void:
 func _on_finished_roll_dice(value:int )->void:
 	roll_amount += 1
 	avaliable_tiles += value*2
-	placement_enabled = false
+	#placement_enabled = false
 
 
 func decrease_avaliable_tiles(amount : int = 1) -> void:

@@ -43,13 +43,29 @@ func _ready() -> void:
 	Events.stop_placement.connect(_set_is_dragging.bind(false))
 	melt_logic.tile_melted.connect(_on_tile_melted)
 	melt_logic.snow_tile_added.connect(_on_snow_tile_added)
+	#Might cause unexpected issues
+	Events.start_placement.emit()
+	
 	if timeline !=null:
 		Dialogic.start(timeline)
 
+func focus() -> void:
+	modulate = Color(1.0, 1.0, 1.0)
+	#set_process_input(true)
+	
+
+func unfocus() -> void:
+	modulate = Color(0.494, 0.494, 0.494)
+	set_process_input(false)
+
+
 func _process(delta: float) -> void:
 	if part != GameManager.current_part:
-		set_process_input(false)
-	
+		set_process_input(true)
+		
+		unfocus()
+	else:
+		focus()
 		
 	var mouse_pos = get_global_mouse_position()
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)

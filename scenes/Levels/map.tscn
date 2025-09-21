@@ -69,6 +69,8 @@ tile_map_data = PackedByteArray("AAADAPX/AQAAAAAAAAAEAPX/AQAAAAAAAAAJAPv/AQAAAAA
 tile_set = ExtResource("1_41hek")
 
 [node name="Part2" parent="Tiles" instance=ExtResource("3_wyvee")]
+visible = true
+modulate = Color(0.494118, 0.494118, 0.494118, 1)
 
 [node name="Part1" parent="Tiles" instance=ExtResource("2_wyvee")]
 

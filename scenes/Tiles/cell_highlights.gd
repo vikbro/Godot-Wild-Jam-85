@@ -23,7 +23,7 @@ func _highlight_cell(cell_coords: Vector2i) -> void:
 	_remove_highlight()
 	
 	# Highlight any cell, not just used ones
-	set_cell(cell_coords, 0, Vector2i(1, 1))
+	#set_cell(cell_coords, 0, Vector2i(1, 1))
 	current_highlight_cell = cell_coords
 
 func _remove_highlight() -> void:

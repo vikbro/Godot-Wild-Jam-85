@@ -28,6 +28,7 @@ tile_size = Vector2i(65, 65)
 sources/0 = SubResource("TileSetAtlasSource_53my0")
 
 [node name="Part2" type="Node2D"]
+visible = false
 y_sort_enabled = true
 script = ExtResource("1_k6n2c")
 part = 2
@@ -45,7 +46,6 @@ script = ExtResource("4_62kja")
 metadata/_edit_lock_ = true
 
 [node name="Interactable" type="TileMapLayer" parent="."]
-visible = false
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAMAPb/AgAAAAAABQAQAPH/AgAAAAAABQATAOz/AgAAAAAABQA=")
 tile_set = ExtResource("2_so5g1")
@@ -53,7 +53,8 @@ script = ExtResource("5_pgit8")
 
 [node name="MeltLogic" type="Node2D" parent="."]
 script = ExtResource("6_bchdp")
-base_melt_time = 7.0
+base_melt_time = 10.0
+neighbor_slow_factor = 0.8
 
 [node name="VisualEffects" type="Node2D" parent="."]
 visible = false
