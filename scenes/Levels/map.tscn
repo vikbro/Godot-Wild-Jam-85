@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://b5vjdkdf50qbv"]
+[gd_scene load_steps=21 format=4 uid="uid://b5vjdkdf50qbv"]
 
 [ext_resource type="TileSet" uid="uid://bmvb61mmppyjs" path="res://scenes/Tiles/Winter_Fall_Tiles.tres" id="1_41hek"]
 [ext_resource type="Script" uid="uid://qouji14njx4r" path="res://scenes/Levels/tile_manager.gd" id="1_bmqx8"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://ckleiqtwx8qf2" path="res://Sound/Wind/strong-wind-1.mp3" id="4_tj4oi"]
 [ext_resource type="Script" uid="uid://sl8nuvgifgoi" path="res://scenes/Tiles/canvas_layer.gd" id="5_vun5d"]
 [ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="6_k7r7o"]
+[ext_resource type="AudioStream" uid="uid://cr6pc5gfykqh6" path="res://Sound/lovely-winter-63497.mp3" id="7_k7r7o"]
 [ext_resource type="Script" uid="uid://br3rv85e21esh" path="res://scenes/Tiles/camera_2d.gd" id="7_vun5d"]
 [ext_resource type="PackedScene" uid="uid://dswslhi4hvr4y" path="res://scenes/die/rolling_table.tscn" id="9_tj4oi"]
 
@@ -82,6 +83,10 @@ pitch_scale = 0.8
 max_polyphony = 10
 
 [node name="TileMelt" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="Ambience" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("7_k7r7o")
+volume_db = -10.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.91, 2.91)
