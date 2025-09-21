@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://p57vbva5srdl"]
+[gd_scene load_steps=5 format=3 uid="uid://p57vbva5srdl"]
 
 [ext_resource type="Script" uid="uid://dhd40b8nrno2w" path="res://scenes/Tiles/Interactables/placeholder_tile.gd" id="1_jtfsm"]
 [ext_resource type="Texture2D" uid="uid://3p6g4eejtw3x" path="res://assets/kenney_hexagon-tiles/Tiles/tileAutumn.png" id="1_nlwt4"]
 [ext_resource type="Texture2D" uid="uid://ucff2t6sqjun" path="res://assets/kenney_hexagon-tiles/Tiles/alienBeige.png" id="2_jtfsm"]
+[ext_resource type="AudioStream" uid="uid://dijspr2kk22bd" path="res://Sound/pigeons-flying-6351.mp3" id="4_oeelx"]
 
 [node name="PlaceholderTile" type="Node2D"]
 z_as_relative = false
@@ -23,3 +24,6 @@ texture = ExtResource("1_nlwt4")
 [node name="AlienBeige" type="Sprite2D" parent="."]
 position = Vector2(-2, -23)
 texture = ExtResource("2_jtfsm")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_oeelx")

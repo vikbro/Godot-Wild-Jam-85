@@ -17,6 +17,7 @@ custom_minimum_size = Vector2(200, 120)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 120.0
 grow_horizontal = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
@@ -25,6 +26,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -32,14 +34,14 @@ grow_vertical = 2
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 30
 max_value = 6.0
 value = 6.0
 fill_mode = 1
 
 [node name="TileAmount" type="Label" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 30
 text = "10"
 
 [node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer"]
@@ -47,15 +49,15 @@ layout_mode = 2
 
 [node name="Rolls" type="Label" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 30
 text = "Rolls: "
 
 [node name="Rolls2" type="Label" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
+theme_override_font_sizes/font_size = 30
 text = "0"
 
 [node name="Button" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 53
+theme_override_font_sizes/font_size = 30
 text = "ROLL"

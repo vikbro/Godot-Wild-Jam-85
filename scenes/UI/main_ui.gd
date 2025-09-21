@@ -50,3 +50,7 @@ func _update_tile_amount(value:int= 0) -> void:
 	
 func _update_roll_amount(value:int = 0) -> void:
 	rolls_2.text = str(GameManager.roll_amount)
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://MENU.tscn")
