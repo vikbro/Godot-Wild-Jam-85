@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://c21p8k8nl3ld4" path="res://scenes/Tiles/audio.gd" id="3_bmqx8"]
 [ext_resource type="PackedScene" uid="uid://k4k07ermsokr" path="res://scenes/Levels/part_2.tscn" id="3_wyvee"]
 [ext_resource type="AudioStream" uid="uid://ckleiqtwx8qf2" path="res://Sound/Wind/strong-wind-1.mp3" id="4_tj4oi"]
-[ext_resource type="Script" path="res://scenes/Tiles/canvas_layer.gd" id="5_vun5d"]
+[ext_resource type="Script" uid="uid://sl8nuvgifgoi" path="res://scenes/Tiles/canvas_layer.gd" id="5_vun5d"]
 [ext_resource type="PackedScene" uid="uid://d32a2t1xo0e8q" path="res://scenes/UI/main_ui.tscn" id="6_k7r7o"]
 [ext_resource type="PackedScene" uid="uid://dswslhi4hvr4y" path="res://scenes/die/rolling_table.tscn" id="9_tj4oi"]
 
@@ -97,7 +97,6 @@ process_material = SubResource("ParticleProcessMaterial_tj4oi")
 script = ExtResource("5_vun5d")
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("6_k7r7o")]
-mouse_filter = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
 anchors_preset = 13

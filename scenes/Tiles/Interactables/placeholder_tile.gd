@@ -24,13 +24,13 @@ func _process(delta: float) -> void:
 
 func interact() -> void:
 	#await Events.camera_movement_stop
-	
 	var tween:Tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(alien_beige,"self_modulate:a",0,animation_duration)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(alien_beige,"position",Vector2(100,-100),animation_duration)
 	tween.finished.connect(Events.camera_after_anim.emit)
+	tween.finished.connect(Events.start_placement.emit)
 
 	
 	pass

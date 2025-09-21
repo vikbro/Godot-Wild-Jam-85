@@ -1,8 +1,8 @@
 extends Node
 
-var placement_enabled: bool = false
+var placement_enabled: bool = true
 
-var avaliable_tiles: int = 100
+var avaliable_tiles: int = 1
 var roll_amount: int = 0
 var current_part: int = 1
 
@@ -22,21 +22,28 @@ func _ready() -> void:
 	Dialogic.timeline_started.connect(Events.timeline_started.emit)
 	Dialogic.timeline_ended.connect(Events.timeline_ended.emit)
 	Events.roll_finished.connect(_on_finished_roll_dice)
-
+	
+	Events.stop_placement.connect(_on_stop_input)
+	Events.start_placement.connect(_on_start_input)
 func _on_dialogic_signal(argument:String):
 	if argument == "higlight_tile_ui":
 		Events.higlight_tile_ui.emit()
 		print("Something was activated!")
 	pass # Replace with function body.
 
+func _on_stop_input() -> void:
+	placement_enabled = false
+
+func _on_start_input() -> void:
+	placement_enabled = true
 func _on_tile_melting() -> void:
 	has_melted_tile = true
 	Dialogic.start("Melting")
 	
 func _on_finished_roll_dice(value:int )->void:
 	roll_amount += 1
-	avaliable_tiles += value
-	placement_enabled = true
+	avaliable_tiles += value*2
+	placement_enabled = false
 
 
 func decrease_avaliable_tiles(amount : int = 1) -> void:
@@ -46,8 +53,8 @@ func decrease_avaliable_tiles(amount : int = 1) -> void:
 		has_clicked_tile = true
 
 	if avaliable_tiles <= 0:
+		Events.stop_placement.emit()
 		pass
-		#Events.exhausted_tiles.emit()
 		
 	
 	pass

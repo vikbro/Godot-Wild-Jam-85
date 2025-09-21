@@ -28,10 +28,10 @@ func _start_cooldown(dice_value:int) -> void:
 	progress_bar.max_value = dice_value
 	progress_bar.value = 0
 	var tween : Tween = get_tree().create_tween()
-	Events.start_placement.emit()
-	GameManager.placement_enabled = true
+	Events.stop_placement.emit()
+	GameManager.placement_enabled = false
 	tween.tween_property(progress_bar,"value",dice_value,dice_value)
-	tween.finished.connect(Events.stop_placement.emit)
+	tween.finished.connect(Events.start_placement.emit)
 	pass
 
 func _highlight_tile_amount() -> void:

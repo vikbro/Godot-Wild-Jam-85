@@ -35,9 +35,11 @@ func change_whole_board() -> void:
 		
 		pass
 
+func _set_is_dragging(value:bool) -> void:
+	is_dragging = value
 
 func _ready() -> void:
-
+	Events.stop_placement.connect(_set_is_dragging.bind(false))
 	melt_logic.tile_melted.connect(_on_tile_melted)
 	melt_logic.snow_tile_added.connect(_on_snow_tile_added)
 	if timeline !=null:
@@ -99,6 +101,7 @@ func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 
 #	Check if placement is an interactable
 	if interactable_layer.tiles.has(cell_coords):
+		Events.stop_placement.emit()
 		Events.camera_movement_start.emit(mouse_pos)
 #		Camera zoom
 		await Events.camera_movement_stop

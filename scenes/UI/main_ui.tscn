@@ -38,7 +38,6 @@ value = 6.0
 fill_mode = 1
 
 [node name="TileAmount" type="Label" parent="Panel/HBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 52
 text = "10"

@@ -9,6 +9,7 @@ func _ready() -> void:
 	
 	Events.stop_placement.connect(stop_input)
 	Events.start_placement.connect(start_input)
+
 	pass # Replace with function body.
 
 func stop_input() -> void:
