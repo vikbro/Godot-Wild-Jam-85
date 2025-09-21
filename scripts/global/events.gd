@@ -11,7 +11,7 @@ signal birds_fly(flying: bool)
 
 #Tiles logic
 signal is_valid_placement(cell_coords : Vector2i)
-signal exhausted_tiles
+signal exhausted_tiles(part: int)
 signal unavaliable_tile_placement
 signal stop_placement
 signal start_placement
