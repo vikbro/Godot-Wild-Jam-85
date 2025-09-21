@@ -111,6 +111,7 @@ process_material = SubResource("ParticleProcessMaterial_tj4oi")
 script = ExtResource("5_vun5d")
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("6_k7r7o")]
+mouse_filter = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
 anchors_preset = 13
@@ -140,27 +141,29 @@ projection = 1
 fov = 82.7
 size = 100.0
 
-[node name="Label" type="Label" parent="."]
-offset_left = 1511.0
-offset_top = -81.0
-offset_right = 2433.0
-offset_bottom = 2.0
-theme_override_font_sizes/font_size = 50
-text = "THANK YOU FOR PLAYING OUR DEMO!"
-
-[node name="Button" type="Button" parent="Label"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -55.5
-offset_right = 55.5
-offset_bottom = 77.0
-grow_horizontal = 2
+offset_left = -117.0
+offset_top = -645.0
+offset_right = -6.0
+offset_bottom = -568.0
+grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 1
 theme_override_font_sizes/font_size = 50
 text = "EXIT"
 
-[connection signal="pressed" from="Label/Button" to="CanvasLayer/UI" method="_on_button_pressed"]
+[node name="Label" type="Label" parent="."]
+offset_left = 1667.0
+offset_top = -80.0
+offset_right = 2589.0
+offset_bottom = 3.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 25
+text = "THANK YOU FOR PLAYING OUR DEMO!"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer" method="_on_button_pressed"]

@@ -2,7 +2,7 @@ extends Node
 
 var placement_enabled: bool = true
 
-var avaliable_tiles: int = 100
+var avaliable_tiles: int = 1000
 var roll_amount: int = 0
 var current_part: int = 1
 

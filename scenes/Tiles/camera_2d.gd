@@ -27,4 +27,3 @@ func next_part(part: int):
 	start_pos = start_pos + Vector2(860, 0)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "position", start_pos, 1)
-	

@@ -118,8 +118,8 @@ spot_range = 465.467
 environment = SubResource("Environment_ef56s")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.654358, -0.587026, 0.476672, -0.536074, 0.804705, 0.255099, 0.53333, 0.0886051, 0.841254, 57.6074, 88.7174, -68.8334)
-light_energy = 1.161
+transform = Transform3D(-0.654358, -0.587026, 0.476672, -0.536074, 0.804705, 0.255099, 0.53333, 0.0886053, 0.841254, -39.2254, 83.3075, 0.481689)
+light_energy = 2.778
 light_indirect_energy = 3.101
 light_angular_distance = 65.45
 
