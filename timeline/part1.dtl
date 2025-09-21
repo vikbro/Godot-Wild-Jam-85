@@ -1,5 +1,6 @@
 Click on a tile to freeze it.
 [signal arg="higlight_tile_ui"]
-You have a limited amout of time you can freeze!
-This time is defined by what result you get from the dice.
-Freeze all the tiles to win!
+You have a limited amout of tiles you can use!
+You can roll the dice to get more tiles!
+The amount of tiles you have is double the result of the dice.
+After each roll you have a cooldown.

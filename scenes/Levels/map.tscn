@@ -12,12 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://dswslhi4hvr4y" path="res://scenes/die/rolling_table.tscn" id="9_tj4oi"]
 
 [sub_resource type="Gradient" id="Gradient_tj4oi"]
-offsets = PackedFloat32Array(0.00189036, 0.529301, 1)
+offsets = PackedFloat32Array(0.00189036, 0.556962, 1)
 colors = PackedColorArray(0.407843, 0.580392, 0.643137, 0.254902, 1, 1, 1, 0.796078, 0.407843, 0.580392, 0.643137, 0.721569)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vun5d"]
 gradient = SubResource("Gradient_tj4oi")
 width = 1
+fill_from = Vector2(0, 0.0188034)
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_k7r7o"]
@@ -26,13 +27,15 @@ colors = PackedColorArray(1, 1, 1, 0.137255, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_wwlet"]
 gradient = SubResource("Gradient_k7r7o")
+width = 1000
 
 [sub_resource type="Gradient" id="Gradient_1h3ao"]
-offsets = PackedFloat32Array(0, 0.405063, 0.639241, 1)
+offsets = PackedFloat32Array(0, 0.197802, 0.639241, 1)
 colors = PackedColorArray(1, 1, 1, 0.141176, 1, 1, 1, 0.831549, 1, 1, 1, 1, 1, 1, 1, 0.137255)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ktgki"]
 gradient = SubResource("Gradient_1h3ao")
+width = 1000
 
 [sub_resource type="Curve" id="Curve_wgsyv"]
 _limits = [-200.0, 200.0, 0.0, 1.0]
@@ -51,8 +54,8 @@ tangential_accel_min = -2.23517e-06
 tangential_accel_max = 10.0
 tangential_accel_curve = SubResource("CurveTexture_am7ri")
 damping_max = 100.0
-scale_min = 1.5
-scale_max = 2.0
+scale_min = 3.0
+scale_max = 6.0
 color_ramp = SubResource("GradientTexture1D_ktgki")
 color_initial_ramp = SubResource("GradientTexture1D_wwlet")
 
@@ -89,6 +92,7 @@ zoom = Vector2(2.91, 2.91)
 script = ExtResource("7_vun5d")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Camera2D"]
+position = Vector2(-124, -23)
 amount = 15
 texture = SubResource("GradientTexture2D_vun5d")
 lifetime = 5.0
