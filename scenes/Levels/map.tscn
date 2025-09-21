@@ -58,12 +58,10 @@ color_initial_ramp = SubResource("GradientTexture1D_wwlet")
 [node name="Map" type="Node2D"]
 
 [node name="Tiles" type="Node2D" parent="."]
-visible = false
 y_sort_enabled = true
 script = ExtResource("1_bmqx8")
 
 [node name="Background" type="TileMapLayer" parent="Tiles"]
-visible = false
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAADAPX/AQAAAAAAAAAEAPX/AQAAAAAAAAAJAPv/AQAAAAAAAAAEAPb/AQAAAAAAAAAFAPb/AQAAAAAAAAAFAPf/AQAAAAAAAAAGAPf/AQAAAAAAAAAGAPj/AQAAAAAAAAAHAPj/AQAAAAAAAAAHAPn/AQAAAAAAAAAIAPn/AQAAAAAAAAAIAPr/AQAAAAAAAAAJAPr/AQAAAAAAAAADAPT/AQAAAAAAAAACAPT/AQAAAAAAAAACAPP/AQAAAAAAAAABAPP/AQAAAAAAAAAKAPv/AQAAAAAAAAAKAPz/AQAAAAAAAAALAPz/AQAAAAAAAAALAP3/AQAAAAAAAAAMAP3/AQAAAAAAAAA=")
 tile_set = ExtResource("1_41hek")

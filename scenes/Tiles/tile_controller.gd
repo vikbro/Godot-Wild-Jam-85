@@ -58,7 +58,7 @@ func _on_tile_melted(cell_coords: Vector2i, previous_data: MeltLogic.SnowTileDat
 	if GameManager.has_melted_tile == false:
 		Events.on_tile_melted.emit()
 		await get_tree().create_timer(5).timeout
-		
+
 	change_tile(cell_coords, global_pos, previous_data.previous_atlas_coords,0)
 	print("Tile melted at ", cell_coords)
 

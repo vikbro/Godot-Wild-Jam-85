@@ -10,6 +10,8 @@ signal on_tile_hover
 signal is_valid_placement(cell_coords : Vector2i)
 signal exhausted_tiles
 signal unavaliable_tile_placement
+signal stop_placement
+signal start_placement
 
 #Camera
 signal camera_movement_start
