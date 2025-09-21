@@ -21,8 +21,8 @@ func restoring_camera_pos():
 	tween.parallel().tween_property(self, "zoom", og_cam_zoom, 1)
 	tween.finished.connect(Events.camera_after_anim_finish.emit)
 
-func next_part():
-	start_pos += Vector2(100, 0)
+func next_part(part: int):
+	start_pos = start_pos + Vector2(1000, 0)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "position", start_pos, 1)
 	

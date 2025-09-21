@@ -51,7 +51,7 @@ metadata/_edit_lock_ = true
 
 [node name="Interactable" type="TileMapLayer" parent="."]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAHAPn/AgAAAAAABQACAP//AgAAAAAABQACAAAAAgAAAAAABQADAP//AgAAAAAABQAEAP7/AgAAAAAABQAFAP3/AgAAAAAABQAGAPz/AgAAAAAABQA=")
+tile_map_data = PackedByteArray("AAACAP//AgAAAAAABQA=")
 tile_set = ExtResource("2_4uw7a")
 script = ExtResource("5_qxco7")
 
