@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Godot-Wild-Jam-85"
-run/main_scene="uid://b5vjdkdf50qbv"
+run/main_scene="uid://cfi324a6031m7"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -30,6 +30,11 @@ directories/dtl_directory={
 "Melting": "res://timeline/Melting.dtl",
 "part1": "res://timeline/part1.dtl"
 }
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 

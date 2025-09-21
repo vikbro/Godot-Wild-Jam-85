@@ -2,7 +2,7 @@ extends Node
 
 var placement_enabled: bool = true
 
-var avaliable_tiles: int = 200
+var avaliable_tiles: int = 1
 var roll_amount: int = 0
 var current_part: int = 1
 
@@ -49,7 +49,7 @@ func _on_tile_melting() -> void:
 	
 func _on_finished_roll_dice(value:int )->void:
 	roll_amount += 1
-	avaliable_tiles += value*2
+	avaliable_tiles += value*3
 	#placement_enabled = false
 
 

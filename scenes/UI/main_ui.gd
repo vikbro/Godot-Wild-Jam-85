@@ -4,7 +4,7 @@ extends Control
 @onready var texture_rect: TextureRect = $Panel/HBoxContainer/TextureRect
 @onready var progress_bar: ProgressBar = $Panel/HBoxContainer/ProgressBar
 @onready var rolls_2: Label = $Panel/HBoxContainer/Rolls2
-@onready var button: Button = $Panel/HBoxContainer/Button
+@onready var roll_btn: Button = $Panel/HBoxContainer/RollBtn
 
 
 # Called when the node enters the scene tree for the first time.
@@ -20,7 +20,7 @@ func _ready() -> void:
 	#Events.roll_finished.connect(_update_roll_amount)
 	
 	Events.start_placement.connect(_enable_btn)
-	Events.stop_placement.connect(_disable_btn)
+	#Events.stop_placement.connect(_disable_btn)
 	
 	Events.roll_finished.connect(_enable_btn)
 	
@@ -28,10 +28,10 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _disable_btn() -> void:
-	button.disabled = true
+	roll_btn.disabled = true
 
 func _enable_btn() -> void:
-	button.disabled = false
+	roll_btn.disabled = false
 
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
