@@ -1,0 +1,37 @@
+extends Node2D
+class_name PlaceholderInteractable
+
+@export var animation_duration : float = 2.0
+
+@onready var fall_sprite: Sprite2D = $FallSprite
+@onready var winter_sprite: Sprite2D = $WinterSprite
+@onready var alien_beige: Sprite2D = $AlienBeige
+
+var tile_coords : Vector2i
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	#interact()
+	
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	#if Input.is_action_just_pressed("left_click"):
+		#Events.camera_movement_stop.emit()
+	pass
+
+func interact() -> void:
+	#await Events.camera_movement_stop
+	
+	var tween:Tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(alien_beige,"self_modulate:a",0,animation_duration)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(alien_beige,"position",Vector2(100,-100),animation_duration)
+	
+	#tween.finished.connect(_remove_overlay.bind(overlay))
+
+	
+	pass

@@ -1,10 +1,17 @@
 extends Node2D
 class_name TileController
+@onready var camera_2d: Camera2D = $Camera2D
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
+@onready var highlight_tile_layer: HighlightTile = $TileMapLayer/HighlightTileLayer
+@onready var interactable_layer: InteractableLayer = $Interactable
+
 @onready var melt_logic: MeltLogic = $MeltLogic
 
 @export var flip_duration := 0.5
+@export var timeline: DialogicTimeline
+
+var interactive_tiles : Array[Vector2i]
 
 var is_dragging := false
 var processed_cells: Array[Vector2i] = []
@@ -15,27 +22,32 @@ func change_whole_board() -> void:
 		pass
 	
 
+
 func _ready() -> void:
-	Events.exhausted_tiles.connect(_on_tiles_exhausted)
+
 	melt_logic.tile_melted.connect(_on_tile_melted)
 	melt_logic.snow_tile_added.connect(_on_snow_tile_added)
+	if timeline !=null:
+		Dialogic.start(timeline)
 
 func _process(delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)
-	Events.on_tile_hover.emit(get_cell_texture(cell_coords))
+	var texture = get_cell_texture(cell_coords)
+	if texture != null:
+		Events.on_tile_hover.emit(texture)
 
 func _on_tile_melted(cell_coords: Vector2i, previous_data: MeltLogic.SnowTileData) -> void:
 	var global_pos = tile_map_layer.map_to_local(cell_coords)
+	if GameManager.has_melted_tile == false:
+		Events.on_tile_melted.emit()
+		await get_tree().create_timer(5).timeout
+		
 	change_tile(cell_coords, global_pos, previous_data.previous_atlas_coords,0)
 	print("Tile melted at ", cell_coords)
 
 func _on_snow_tile_added(cell_coords: Vector2i) -> void:
 	print("Snow tile added at ", cell_coords)
-
-func _on_tiles_exhausted() -> void:
-	set_process_input(false)
-	print("Input processing disabled due to exhausted tiles")
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -49,7 +61,6 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion and is_dragging:
 		place_tile(get_global_mouse_position(), 1)
 
-# --- Universal tile swap function ---
 func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_coords: Vector2i, source_id: int = 0) -> void:
 	if processed_cells.has(cell_coords):
 		return
@@ -68,6 +79,17 @@ func change_tile(cell_coords: Vector2i, global_pos: Vector2, replacement_atlas_c
 # --- Placement with custom validation ---
 func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 	var cell_coords = tile_map_layer.local_to_map(mouse_pos)
+	
+#	Check if placement is an interactable
+	if interactable_layer.tiles.has(cell_coords):
+		Events.camera_movement_start.emit(mouse_pos)
+#		Camera zoom
+		await Events.camera_movement_stop
+		interactable_layer.tiles[cell_coords].interact()
+		Events.camera_after_anim.emit()
+		await Events.camera_after_anim_finish
+		pass
+	
 	if not can_tile_be_changed(cell_coords):
 		return
 
