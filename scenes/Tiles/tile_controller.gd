@@ -107,6 +107,7 @@ func place_tile(mouse_pos: Vector2,source_id : int = 1) -> void:
 		await Events.camera_movement_stop
 		interactable_layer.tiles[cell_coords].interact()
 		await Events.camera_after_anim_finish
+		Events.start_placement.emit()
 		interactable_layer.erase_cell(cell_coords)
 		interactable_layer.erase_code(cell_coords)
 		pass

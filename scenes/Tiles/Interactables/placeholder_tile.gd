@@ -31,6 +31,6 @@ func interact() -> void:
 	tween.set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(alien_beige,"position",Vector2(100,-100),animation_duration)
 	tween.finished.connect(Events.camera_after_anim.emit)
-	tween.finished.connect(Events.start_placement.emit)
+	#Events.start_placement.emit()
 
 	pass
